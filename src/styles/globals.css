@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -45,8 +43,8 @@
 
 :root {
   /* TU PALETA FORKBIN */
-  --background: 28 25 23; /* #1C1917 */
-  --foreground: 249 250 251; /* #F9FAFB */
+  --background: #1c1917; /* #1C1917 */
+  --foreground: #f9fafb; /* #F9FAFB */
   --card: 23 23 23; /* #171717 (un toque más oscuro para cards) */
   --card-foreground: 249 250 251;
   --popover: 23 23 23;

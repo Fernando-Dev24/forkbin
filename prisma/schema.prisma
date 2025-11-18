@@ -13,3 +13,107 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// ================================
+// USER
+// ================================
+model User {
+  id         String   @id @default(cuid())          // ID propio de nuestra app
+  supabaseId String   @unique                       // UID de auth.users (Supabase Auth)
+  email      String   @unique                       // Viene de GitHub/Google/email
+  username   String   @unique                       // @tunombre
+  name       String?                                // Nombre real (opcional)
+  avatar     String?                                // URL del avatar
+  country    String?                                // Para estadísticas futuras
+  credits    Int      @default(5)                   // 5 bins gratis + extras comprados
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relaciones
+  bins       Bin[]                                  // Bins que creó este usuario
+  forks      Fork[]                                 // Forks que ÉL hizo (registro histórico)
+  accounts   Account[]                              // Conexiones OAuth (GitHub, Google…)
+
+  @@map("users")
+}
+
+// ================================
+// ACCOUNT (para OAuth GitHub/Google)
+// ================================
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String                        // → User.id
+  provider           String  // "github" | "google"
+  providerAccountId  String  // ID del usuario en GitHub/Google (ej: 12345678)
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])         // Un usuario no puede conectar 2 veces la misma cuenta
+  @@map("accounts")
+}
+
+// ================================
+// BIN
+// ================================
+model Bin {
+  id            String    @id @default(cuid())
+  slug          String    @unique                     // URL bonita: /b/username/titulo-lindo
+  title         String
+  description   String?
+  content       Json                              // El JSON del mock API
+  isPublic      Boolean   @default(true)            // false = solo el dueño y futuros equipos
+  tags          String[]  @default([])
+
+  // Árbol de forks
+  forkedFromId  String?                             // null = bin original
+  forkedFrom    Bin?      @relation("ForkTree", fields: [forkedFromId], references: [id])
+  forks         Bin[]     @relation("ForkTree")     // todos los bins que nacieron de este
+
+  // Contadores (rápidos para Community / Trending)
+  forksCount    Int       @default(0)               // cuántas veces fue forkeado
+  viewsCount    Int       @default(0)               // cuántas visitas
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  authorId      String
+  author        User      @relation(fields: [authorId], references: [id])
+
+  // Relaciones extras
+  forkRecords   Fork[]                              // quién y cuándo lo forkeó
+
+  @@index([slug])
+  @@index([isPublic])
+  @@index([forksCount])
+  @@index([viewsCount])
+  @@index([createdAt])
+  @@index([tags])
+  @@map("bins")
+}
+
+// ================================
+// FORK → ¡LA TABLA QUE TÚ QUISISTE Y TIENE TODO EL SENTIDO!
+// ================================
+model Fork {
+  id        String   @id @default(cuid())
+
+  binId     String                             // → Bin.id (el bin ORIGINAL que fue forkeado)
+  userId    String                             // → User.id (quién hizo el fork)
+  createdAt DateTime @default(now())           // cuándo lo hizo
+
+  // Relaciones
+  bin       Bin      @relation(fields: [binId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  // Importante: evita que alguien forkée 2 veces el mismo bin
+  @@unique([binId, userId])
+
+  // Índices para consultas rápidas
+  @@index([binId])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("forks")
+}
