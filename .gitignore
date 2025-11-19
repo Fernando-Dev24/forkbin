@@ -40,8 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# prisma client
 /src/generated/prisma
 
-# postgres directory
+/src/generated/prisma
+
 /postgres

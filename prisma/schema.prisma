@@ -27,6 +27,7 @@ model User {
   id         String   @id @default(cuid())          // ID propio de nuestra app
   supabaseId String   @unique                       // UID de auth.users (Supabase Auth)
   email      String   @unique                       // Viene de GitHub/Google/email
+  password   String?
   username   String   @unique                       // @tunombre
   name       String?                                // Nombre real (opcional)
   avatar     String?                                // URL del avatar
