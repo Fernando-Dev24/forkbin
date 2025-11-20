@@ -42,59 +42,98 @@
 }
 
 :root {
-  /* TU PALETA FORKBIN */
-  --background: #1c1917; /* #1C1917 */
-  --foreground: #f9fafb; /* #F9FAFB */
-  --card: 23 23 23; /* #171717 (un toque más oscuro para cards) */
-  --card-foreground: 249 250 251;
-  --popover: 23 23 23;
-  --popover-foreground: 249 250 251;
+  --background: oklch(0.985 0.004 248.9); /* text-primary */
+  --foreground: oklch(0.254 0.015 63.3); /* second-base-color */
 
-  --primary: 97 95 255; /* #615FFF ← accent principal */
-  --primary-foreground: 23 23 23; /* texto oscuro sobre púrpura */
+  /* Cards */
+  --card: oklch(1 0 0); /* blanco */
+  --card-foreground: oklch(0.254 0.015 63.3);
 
-  --secondary: 42 39 37; /* #2A2725 */
-  --secondary-foreground: 249 250 251;
+  /* Popover */
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.254 0.015 63.3);
 
-  --muted: 42 39 37;
-  --muted-foreground: 156 163 175; /* gris suave */
+  /* Colors */
+  --primary: oklch(0.624 0.233 265.3);
+  --primary-foreground: oklch(0.985 0.004 248.9);
 
-  --accent: 97 95 255; /* mismo que primary o puedes usar el verde #00A88B aquí */
-  --accent-foreground: 23 23 23;
+  --secondary: oklch(0.569 0.049 257.7);
+  --secondary-foreground: oklch(0.985 0.004 248.9);
 
-  --success: 34 197 94; /* #22C55E */
-  --destructive: 239 68 68; /* #EF4444 */
-  --warning: 251 191 36; /* #FBBF24 */
+  /* Feedback */
+  --success: oklch(0.778 0.177 149.1);
+  --success-foreground: oklch(0.254 0.015 63.3);
 
-  --border: 42 39 37; /* #2A2725 */
-  --input: 42 39 37;
-  --ring: 97 95 255; /* #615FFF (focus ring púrpura) */
+  --error: oklch(0.717 0.215 27.4);
+  --error-foreground: oklch(0.254 0.015 63.3);
 
-  --radius: 0.625rem; /* 10px → tu radio favorito */
+  --warning: oklch(0.862 0.179 79.6);
+  --warning-foreground: oklch(0.254 0.015 63.3);
+
+  --link: oklch(0.726 0.167 240.3);
+
+  /* Muted */
+  --muted: oklch(0.96 0.01 250);
+  --muted-foreground: oklch(0.45 0.03 260);
+
+  /* Accent */
+  --accent: oklch(0.96 0.01 250);
+  --accent-foreground: oklch(0.254 0.015 63.3);
+
+  /* Border / Input */
+  --border: oklch(0.92 0.01 250);
+  --input: oklch(0.92 0.01 250);
+
+  --ring: oklch(0.624 0.233 265.3);
+
+  --radius: 0.5rem;
 }
 
 .dark {
-  /* Mismo que light porque Forkbin es 100% dark mode */
-  --background: 28 25 23; /* #1C1917 */
-  --foreground: 249 250 251;
-  --card: 23 23 23;
-  --card-foreground: 249 250 251;
-  --popover: 23 23 23;
-  --popover-foreground: 249 250 251;
-  --primary: 97 95 255;
-  --primary-foreground: 23 23 23;
-  --secondary: 42 39 37;
-  --secondary-foreground: 249 250 251;
-  --muted: 42 39 37;
-  --muted-foreground: 156 163 175;
-  --accent: 97 95 255;
-  --accent-foreground: 23 23 23;
-  --success: 34 197 94;
-  --destructive: 239 68 68;
-  --warning: 251 191 36;
-  --border: 42 39 37;
-  --input: 42 39 37;
-  --ring: 97 95 255;
+  --background: oklch(21.612% 0.00611 55.916); /* second-base-color */
+  --foreground: oklch(98.463% 0.00181 249.248); /* text-primary */
+
+  /* Cards elevadas */
+  --card: oklch(27.523% 0.00573 55.971); /* base */
+  --card-foreground: oklch(0.985 0.004 248.9);
+
+  --popover: oklch(0.293 0.02 68.4);
+  --popover-foreground: oklch(0.985 0.004 248.9);
+
+  /* Colors */
+  --primary: oklch(58.338% 0.23059 277.077);
+  --primary-foreground: oklch(0.985 0.004 248.9);
+
+  --secondary: oklch(55.102% 0.02343 264.389);
+  --secondary-foreground: oklch(0.985 0.004 248.9);
+
+  /* Feedback */
+  --success: oklch(72.276% 0.19199 149.6);
+  --success-foreground: oklch(0.985 0.004 248.9);
+
+  --error: oklch(63.681% 0.20784 25.315);
+  --error-foreground: oklch(0.985 0.004 248.9);
+
+  --warning: oklch(84.597% 0.17319 85.571);
+  --warning-foreground: oklch(0.254 0.015 63.3);
+
+  --link: oklch(72.32% 0.16242 238.865);
+
+  /* Muted */
+  --muted: oklch(0.293 0.02 68.4);
+  --muted-foreground: oklch(0.569 0.049 257.7);
+
+  /* Accent */
+  --accent: oklch(0.293 0.02 68.4);
+  --accent-foreground: oklch(0.985 0.004 248.9);
+
+  /* Border / Input */
+  --border: oklch(30.118% 0.00003 271.152);
+  --input: oklch(28.094% 0.00003 271.152);
+
+  --ring: oklch(0.624 0.233 265.3);
+
+  --radius: 0.5rem;
 }
 
 @layer base {
@@ -105,4 +144,16 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+.container {
+  @apply w-[90%] mx-auto;
+}
+
+.text-base {
+  @apply text-[16px];
+}
+
+span.hero-icons {
+  @apply flex items-center gap-x-3;
 }
