@@ -7,7 +7,8 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "seed": "tsx src/seed/seed-database.ts"
+    "seed": "tsx src/seed/seed-database.ts",
+    "add:ui": "pnpm dlx shadcn add"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",

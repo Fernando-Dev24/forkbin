@@ -77,7 +77,7 @@ model Bin {
   // Árbol de forks
   forkedFromId  String?                             // null = bin original
   forkedFrom    Bin?      @relation("ForkTree", fields: [forkedFromId], references: [id])
-  forks         Bin[]     @relation("ForkTree")     // todos los bins que nacieron de este
+  forks         Bin[]     @relation("ForkTree")     // los bins que nacieron de este
 
   // Contadores (rápidos para Community / Trending)
   forksCount    Int       @default(0)               // cuántas veces fue forkeado
