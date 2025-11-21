@@ -33,7 +33,7 @@ export const initialData: SeedData = {
       email: "refer@gmail.com",
       username: "fernando.ortiz",
       supabaseId: "12345666778",
-      // password: bcrypt.hashSync("123456", 10),
+      password: bcrypt.hashSync("123456", 10),
     },
   ],
   bins: [

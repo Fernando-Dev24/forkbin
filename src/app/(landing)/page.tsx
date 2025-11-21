@@ -1,4 +1,4 @@
-import { Navbar, Hero, PopularBins } from "@/components/landing";
+import { Navbar, Hero, PopularBins, HowItWorks } from "@/components/landing";
 
 export default function Landing() {
   return (
@@ -6,6 +6,7 @@ export default function Landing() {
       <Navbar />
       <Hero />
       <PopularBins />
+      <HowItWorks />
     </div>
   );
 }

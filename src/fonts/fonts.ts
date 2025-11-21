@@ -1,4 +1,4 @@
-import { Inter, Outfit } from "next/font/google";
+import { Inter, IBM_Plex_Mono, Outfit } from "next/font/google";
 
 export const mainFont = Outfit({
   variable: "--font-outfit",
@@ -6,8 +6,14 @@ export const mainFont = Outfit({
   weight: ["600", "500", "400", "300"],
 });
 
-export const interFont = Inter({
+export const serifFont = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["700"],
+  weight: ["600", "500", "400", "300"],
+});
+
+export const monoFont = IBM_Plex_Mono({
+  variable: "--font-ibm",
+  subsets: ["latin"],
+  weight: ["600", "500", "400", "300"],
 });

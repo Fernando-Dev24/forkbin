@@ -1,3 +1,4 @@
+import { JsonObject } from "@prisma/client/runtime/client";
 import { User } from "../user/user-type";
 
 export interface Bin {
@@ -5,7 +6,7 @@ export interface Bin {
   slug: string;
   title: string;
   description: string | null;
-  content: BinContentType; // esto es solo que lo que devolvera la API publica
+  content: JsonObject; // esto es solo que lo que devolvera la API publica
   isPublic: boolean;
   tags: string[];
 
@@ -26,5 +27,3 @@ export interface Bin {
   // Relaciones extras
   forkRecords: []; // quién y cuándo lo forkeó
 }
-
-export type BinContentType = Record<string, any>;
