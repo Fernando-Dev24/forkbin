@@ -46,7 +46,7 @@ export default function LoginPage() {
               />
               {fieldState.error ? (
                 <FieldError className="flex items-center gap-x-2">
-                  <TriangleAlert />
+                  <TriangleAlert size={15} />
                   {fieldState.error.message}
                 </FieldError>
               ) : (
@@ -85,7 +85,7 @@ export default function LoginPage() {
 
               {fieldState.error ? (
                 <FieldError className="flex items-center gap-x-2">
-                  <TriangleAlert />
+                  <TriangleAlert size={15} />
                   {fieldState.error.message}
                 </FieldError>
               ) : (

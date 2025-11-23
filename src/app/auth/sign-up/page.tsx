@@ -7,7 +7,6 @@ import {
   Field,
   FieldLabel,
   FieldError,
-  FieldDescription,
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -62,7 +61,7 @@ export default function SignUp() {
                       </div>
                       {fieldState.error && (
                         <FieldError className="flex items-center gap-x-2">
-                          <TriangleAlert />
+                          <TriangleAlert size={15} />
                           {fieldState.error.message}
                         </FieldError>
                       )}
@@ -89,19 +88,10 @@ export default function SignUp() {
                         id={name}
                         {...field}
                       />
-                      {/* <Button
-                        type="button"
-                        size={"icon"}
-                        variant={"ghost"}
-                        className="absolute top-0 right-0"
-                        onClick={togglePassword}
-                      >
-                        {isPasswordType ? <EyeClosed /> : <Eye />}
-                      </Button> */}
                     </div>
                     {fieldState.error && (
                       <FieldError className="flex items-center gap-x-2">
-                        <TriangleAlert />
+                        <TriangleAlert size={15} />
                         {fieldState.error.message}
                       </FieldError>
                     )}
