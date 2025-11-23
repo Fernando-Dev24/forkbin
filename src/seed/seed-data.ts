@@ -6,7 +6,8 @@ interface UserSeed {
   email: string;
   password?: string;
   username: string;
-  name?: string;
+  firstName?: string;
+  lastName?: string;
   avatar?: string;
   country?: string;
 }
@@ -38,7 +39,8 @@ interface SeedData {
 export const initialData: SeedData = {
   users: [
     {
-      name: "Fernando Ortiz",
+      firstName: "Fernando",
+      lastName: "Ortiz",
       email: "refer@gmail.com",
       username: "fernando.ortiz",
       supabaseId: "12345666778",

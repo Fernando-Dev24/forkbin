@@ -9,7 +9,7 @@ export const Navbar = () => {
 
       <div className="flex items-center md:gap-x-5">
         <LinkButton
-          href="/auth/sign-in"
+          href="/auth/login"
           variant={"outline"}
           className="hidden md:block"
         >

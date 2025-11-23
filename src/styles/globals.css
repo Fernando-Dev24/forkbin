@@ -218,3 +218,8 @@ span.hero-icons {
 div.glass-container {
   @apply bg-[#4D4D4D]/10 backdrop-blur-xl border border-white/20 rounded-xl shadow-lg;
 }
+
+/* SKELETON */
+.skeleton-btn {
+  @apply w-24 h-6 rounded-md;
+}

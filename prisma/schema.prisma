@@ -29,7 +29,8 @@ model User {
   email      String   @unique                       // Viene de GitHub/Google/email
   password   String?
   username   String   @unique                       // @tunombre
-  name       String?                                // Nombre real (opcional)
+  firstName  String?                                // Primer nombre (opcional)
+  lastName   String?                                // Apellido (opcional)
   avatar     String?                                // URL del avatar
   country    String?                                // Para estadísticas futuras
   credits    Int      @default(5)                   // 5 bins gratis + extras comprados
@@ -73,7 +74,7 @@ model Bin {
   content       Json                              // El JSON del mock API
   tags          String[]  @default([])
   isPublic      Boolean   @default(true)            // false = solo el dueño y futuros equipos
-  isMockApi        Boolean   @default(false)
+  isMockApi     Boolean   @default(false)
 
   // Árbol de forks
   forkedFromId  String?                             // null = bin original
