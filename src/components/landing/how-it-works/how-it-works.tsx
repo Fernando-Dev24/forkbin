@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui";
+import { LinkButton } from "@/components/ui/link-button";
 
 export const HowItWorks = () => {
   return (
@@ -69,7 +69,9 @@ export const HowItWorks = () => {
       </div>
 
       <div className="mt-10 flex justify-center">
-        <Button variant="default">Start forking now</Button>
+        <LinkButton href="/auth/sign-up" variant="default">
+          Start forking now
+        </LinkButton>
       </div>
     </div>
   );

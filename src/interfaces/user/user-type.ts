@@ -1,10 +1,6 @@
+import { Provider } from "@/generated/prisma/enums";
 import { Bin } from "../bin/bin-type";
 import { Fork } from "../fork/fork-type";
-
-enum Provider {
-  google = "google",
-  github = "github",
-}
 
 export interface User {
   id: string;

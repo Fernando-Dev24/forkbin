@@ -73,7 +73,7 @@ model Bin {
   content       Json                              // El JSON del mock API
   tags          String[]  @default([])
   isPublic      Boolean   @default(true)            // false = solo el dueño y futuros equipos
-  isMock        Boolean   @default(false)
+  isMockApi        Boolean   @default(false)
 
   // Árbol de forks
   forkedFromId  String?                             // null = bin original

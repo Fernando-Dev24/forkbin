@@ -194,6 +194,14 @@ body {
   }
 }
 
+/* RENDERS BUTTON WITH CURSOR POINTER BY DEFAULT */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
 .container {
   @apply w-[90%] mx-auto;
 }
@@ -204,4 +212,9 @@ body {
 
 span.hero-icons {
   @apply flex items-center gap-x-3;
+}
+
+/* glassmorphism */
+div.glass-container {
+  @apply bg-[#4D4D4D]/10 backdrop-blur-xl border border-white/20 rounded-xl shadow-lg;
 }

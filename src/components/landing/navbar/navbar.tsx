@@ -1,4 +1,5 @@
 import { Button, Logo } from "@/components/ui";
+import { LinkButton } from "../../ui/link-button";
 
 export const Navbar = () => {
   return (
@@ -7,10 +8,16 @@ export const Navbar = () => {
       <Logo />
 
       <div className="flex items-center md:gap-x-5">
-        <Button variant="outline" className="md:block hidden">
-          Login
-        </Button>
-        <Button variant="default">Sign Up</Button>
+        <LinkButton
+          href="/auth/sign-in"
+          variant={"outline"}
+          className="hidden md:block"
+        >
+          Sign In
+        </LinkButton>
+        <LinkButton href="/auth/sign-up" variant={"default"}>
+          Sign Up
+        </LinkButton>
       </div>
     </nav>
   );

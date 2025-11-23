@@ -10,7 +10,7 @@ async function main() {
   await prisma.account.deleteMany();
   await prisma.user.deleteMany();
 
-  const { users, bins } = initialData;
+  const { users, account, bins } = initialData;
 
   await prisma.user.createMany({
     data: users,
@@ -24,6 +24,13 @@ async function main() {
   });
 
   if (!user) throw new Error("User not found");
+
+  await prisma.account.create({
+    data: {
+      ...account,
+      userId: user.id,
+    },
+  });
 
   const binsData = bins.map((bin) => ({
     ...bin,
