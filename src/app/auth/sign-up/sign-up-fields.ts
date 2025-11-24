@@ -1,12 +1,21 @@
-import { SignUpSchema } from "./use-sign-up-form";
-import z from "zod";
+import { InferZod } from "@/interfaces";
+import { SignUpSchema } from "@/schemas/auth";
+
+// This replaces enums use
+const TYPES = {
+  TEXT: "text",
+  PASSWORD: "password",
+  EMAIL: "email",
+} as const;
+
+type FieldType = (typeof TYPES)[keyof typeof TYPES];
 
 interface SignUpField {
-  name: keyof z.infer<typeof SignUpSchema>;
+  name: keyof InferZod<typeof SignUpSchema>;
   placeholder: string;
   label: string;
   renderBtn?: boolean;
-  type: "text" | "password" | "email";
+  type: FieldType;
 }
 
 export const signUpFields: SignUpField[] = [
@@ -46,6 +55,6 @@ export const signUpFields: SignUpField[] = [
     label: "Confirm password",
     placeholder: "Confirm password",
     type: "password",
-    renderBtn: true,
+    renderBtn: false,
   },
 ];

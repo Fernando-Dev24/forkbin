@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { Controller } from "react-hook-form";
+import { useAuthForm } from "@/hooks";
+import { LoginSchema } from "@/schemas/auth";
 import {
   Field,
   FieldDescription,
@@ -14,12 +16,14 @@ import { Button } from "@/components/ui";
 import { FaGoogle } from "react-icons/fa";
 import { FiGithub } from "react-icons/fi";
 import { Eye, EyeClosed, TriangleAlert } from "lucide-react";
-import { useLoginForm } from "./use-login-form";
 import { Logo } from "@/components/ui/logo";
 
 export default function LoginPage() {
-  const { control, isPasswordType, togglePassword, onSubmit, handleSubmit } =
-    useLoginForm();
+  const { isPasswordType, control, handleSubmit, onSubmit, togglePassword } =
+    useAuthForm(LoginSchema, {
+      email: "",
+      password: "",
+    });
 
   return (
     <>
@@ -79,7 +83,7 @@ export default function LoginPage() {
                   className="absolute top-0 right-0"
                   onClick={togglePassword}
                 >
-                  {isPasswordType ? <EyeClosed /> : <Eye />}
+                  {isPasswordType ? <Eye /> : <EyeClosed />}
                 </Button>
               </div>
 

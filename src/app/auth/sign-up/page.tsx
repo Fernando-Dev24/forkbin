@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { Controller } from "react-hook-form";
-import { useSignUpForm } from "./use-sign-up-form";
 import { Button, Logo } from "@/components/ui";
+import { useAuthForm } from "@/hooks";
+import { SignUpSchema } from "@/schemas/auth";
 import {
   Field,
   FieldLabel,
@@ -13,12 +15,18 @@ import { Input } from "@/components/ui/input";
 import { TriangleAlert, EyeClosed, Eye } from "lucide-react";
 import { FaGoogle } from "react-icons/fa";
 import { FiGithub } from "react-icons/fi";
-import Link from "next/link";
 import { signUpFields } from "./sign-up-fields";
 
 export default function SignUp() {
   const { control, isPasswordType, handleSubmit, onSubmit, togglePassword } =
-    useSignUpForm();
+    useAuthForm(SignUpSchema, {
+      firstName: "",
+      lastName: "",
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
 
   return (
     <>
@@ -30,8 +38,8 @@ export default function SignUp() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* EMAIL */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {signUpFields.map(({ name, ...restProps }) => {
-            if (name === "password") {
+          {signUpFields.map(({ name, renderBtn, ...restProps }) => {
+            if (name === "password" || name === "confirmPassword") {
               return (
                 <Controller
                   name={name}
@@ -49,15 +57,17 @@ export default function SignUp() {
                           id={name}
                           {...field}
                         />
-                        <Button
-                          type="button"
-                          size={"icon"}
-                          variant={"ghost"}
-                          className="absolute top-0 right-0"
-                          onClick={togglePassword}
-                        >
-                          {isPasswordType ? <EyeClosed /> : <Eye />}
-                        </Button>
+                        {renderBtn && (
+                          <Button
+                            type="button"
+                            size={"icon"}
+                            variant={"ghost"}
+                            className="absolute top-0 right-0"
+                            onClick={togglePassword}
+                          >
+                            {isPasswordType ? <Eye /> : <EyeClosed />}
+                          </Button>
+                        )}
                       </div>
                       {fieldState.error && (
                         <FieldError className="flex items-center gap-x-2">
@@ -83,7 +93,7 @@ export default function SignUp() {
                     </FieldLabel>
                     <div className="relative">
                       <Input
-                        type={isPasswordType ? "password" : "text"}
+                        type={restProps.type}
                         placeholder={restProps.placeholder}
                         id={name}
                         {...field}
