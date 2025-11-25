@@ -1,0 +1,106 @@
+"use client";
+
+import { Button, FormFieldInput } from "@/components/ui";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { createBinFields } from "./create-bin-fields";
+import { useCreateBinForm } from "@/hooks";
+import { CreateBinSchema } from "@/schemas/bin";
+import { Separator } from "@/components/ui/separator";
+import { FilePlus, X } from "lucide-react";
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Checkbox } from "@radix-ui/react-checkbox";
+
+export const CreateBinDialog = () => {
+  const { control, handleSubmit } = useCreateBinForm(CreateBinSchema, {
+    title: "",
+    slug: "",
+    description: "",
+    isMockApi: false,
+    isPublic: false,
+  });
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Create new bin</Button>
+      </DialogTrigger>
+
+      {/* DIALOG CONTENT */}
+      <DialogContent className="sm:max-w-[425px] max-h-[80%] overflow-y-auto">
+        <DialogTitle>Create a new bin</DialogTitle>
+        <DialogDescription>
+          Fill all fields to start editing your new bin
+        </DialogDescription>
+
+        <form>
+          {createBinFields.map((field) => (
+            <FormFieldInput
+              control={control}
+              label={field.label}
+              name={field.name}
+              placeholder={field.placeholder}
+              key={field.name}
+              type="text"
+            />
+          ))}
+
+          <Separator className="my-5" />
+
+          <div className="mt-5 space-y-5">
+            <div>
+              <Checkbox id="isPublic" />
+              <FieldContent>
+                <FieldLabel htmlFor="isPublic">Public</FieldLabel>
+                <FieldDescription>
+                  If you mark your bin as public, it counts on community stats,
+                  and anyone may fork it
+                </FieldDescription>
+              </FieldContent>
+            </div>
+
+            <Field orientation={"horizontal"}>
+              <Checkbox id="isMockApi" />
+              <FieldContent>
+                <FieldLabel htmlFor="isMockApi">Mock API</FieldLabel>
+                <FieldDescription>
+                  Consider that if you mark this bin as mock API, it will must
+                  fill the schema: METHOD {">"} STATUS CODE {">"} ENDPOINT {">"}{" "}
+                  response data. You can change this later.
+                </FieldDescription>
+              </FieldContent>
+            </Field>
+          </div>
+
+          <Separator className="my-5" />
+
+          <DialogFooter className="mt-5">
+            <Button type="submit">
+              <FilePlus />
+              Create bin
+            </Button>
+
+            <DialogClose asChild>
+              <Button type="button" variant={"outline"}>
+                <X />
+                Cancel
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};

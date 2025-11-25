@@ -1,7 +1,12 @@
+import { Projects, CreateBinCard } from "@/components/app/dashboard";
+
 export default function DashboardPage() {
   return (
-    <div>
-      <h1>Hello Dashboard</h1>
+    <div className="grid grid-cols-1 md:grid-cols-[400px_1fr] gap-5">
+      <Projects />
+      <div className="hidden md:block">
+        <CreateBinCard />
+      </div>
     </div>
   );
 }

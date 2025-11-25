@@ -32,7 +32,7 @@ export const AppSidebarNavMain = ({ mainItems }: Props) => {
       <SidebarMenu>
         {mainItems.map((item) => (
           <Collapsible key={item.title} asChild>
-            <SidebarMenuItem className="p-0">
+            <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip={item.title}>
                 <a href={item.url}>
                   <item.icon />

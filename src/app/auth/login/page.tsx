@@ -1,22 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { Controller } from "react-hook-form";
 import { useAuthForm } from "@/hooks";
 import { LoginSchema } from "@/schemas/auth";
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-  FieldSeparator,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui";
+import { FieldSeparator } from "@/components/ui/field";
+import { Button, FormFieldPassword } from "@/components/ui";
 import { FaGoogle } from "react-icons/fa";
 import { FiGithub } from "react-icons/fi";
-import { Eye, EyeClosed, TriangleAlert } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
+import { FormFieldInput } from "@/components/ui";
 
 export default function LoginPage() {
   const { isPasswordType, control, handleSubmit, onSubmit, togglePassword } =
@@ -34,71 +26,25 @@ export default function LoginPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* EMAIL */}
-        <Controller
-          name="email"
+        <FormFieldInput
           control={control}
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel htmlFor="email" className="text-lg">
-                Email
-              </FieldLabel>
-              <Input
-                type="email"
-                placeholder="email@email.com"
-                id="email"
-                {...field}
-              />
-              {fieldState.error ? (
-                <FieldError className="flex items-center gap-x-2">
-                  <TriangleAlert size={15} />
-                  {fieldState.error.message}
-                </FieldError>
-              ) : (
-                <FieldDescription>Enter your email</FieldDescription>
-              )}
-            </Field>
-          )}
+          name="email"
+          label="Email"
+          placeholder="youremail@email.com"
+          type="email"
+          description="Enter your email"
         />
 
         {/* PASSWORD */}
-        <Controller
-          name="password"
+        <FormFieldPassword
           control={control}
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel htmlFor="password" className="w-max text-lg">
-                Password
-              </FieldLabel>
-              <div className="relative">
-                <Input
-                  type={isPasswordType ? "password" : "text"}
-                  placeholder="Password"
-                  id="password"
-                  {...field}
-                />
-                <Button
-                  type="button"
-                  size={"icon"}
-                  variant={"ghost"}
-                  className="absolute top-0 right-0"
-                  onClick={togglePassword}
-                >
-                  {isPasswordType ? <Eye /> : <EyeClosed />}
-                </Button>
-              </div>
-
-              {fieldState.error ? (
-                <FieldError className="flex items-center gap-x-2">
-                  <TriangleAlert size={15} />
-                  {fieldState.error.message}
-                </FieldError>
-              ) : (
-                <FieldDescription>
-                  It must be at least 6 characters
-                </FieldDescription>
-              )}
-            </Field>
-          )}
+          name="password"
+          label="Password"
+          placeholder="Enter your password"
+          type={isPasswordType ? "password" : "text"}
+          description="It must be at least 6 characters long"
+          isPasswordType={isPasswordType}
+          togglePassword={togglePassword}
         />
 
         <Button type="submit" variant={"default"} className="w-full text-lg">

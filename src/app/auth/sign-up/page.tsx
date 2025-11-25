@@ -1,18 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Controller } from "react-hook-form";
-import { Button, Logo } from "@/components/ui";
+import {
+  Button,
+  FormFieldInput,
+  FormFieldPassword,
+  Logo,
+} from "@/components/ui";
 import { useAuthForm } from "@/hooks";
 import { SignUpSchema } from "@/schemas/auth";
-import {
-  Field,
-  FieldLabel,
-  FieldError,
-  FieldSeparator,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { TriangleAlert, EyeClosed, Eye } from "lucide-react";
+import { FieldSeparator } from "@/components/ui/field";
 import { FaGoogle } from "react-icons/fa";
 import { FiGithub } from "react-icons/fi";
 import { signUpFields } from "./sign-up-fields";
@@ -36,77 +33,31 @@ export default function SignUp() {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        {/* EMAIL */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {signUpFields.map(({ name, renderBtn, ...restProps }) => {
             if (name === "password" || name === "confirmPassword") {
               return (
-                <Controller
-                  name={name}
+                <FormFieldPassword
                   control={control}
+                  isPasswordType={isPasswordType}
+                  label={restProps.label}
+                  placeholder={restProps.placeholder}
+                  name={name}
+                  togglePassword={togglePassword}
+                  type={isPasswordType ? "password" : "text"}
                   key={name}
-                  render={({ field, fieldState }) => (
-                    <Field>
-                      <FieldLabel htmlFor={name} className="text-lg">
-                        {restProps.label}
-                      </FieldLabel>
-                      <div className="relative">
-                        <Input
-                          type={isPasswordType ? "password" : "text"}
-                          placeholder={restProps.placeholder}
-                          id={name}
-                          {...field}
-                        />
-                        {renderBtn && (
-                          <Button
-                            type="button"
-                            size={"icon"}
-                            variant={"ghost"}
-                            className="absolute top-0 right-0"
-                            onClick={togglePassword}
-                          >
-                            {isPasswordType ? <Eye /> : <EyeClosed />}
-                          </Button>
-                        )}
-                      </div>
-                      {fieldState.error && (
-                        <FieldError className="flex items-center gap-x-2">
-                          <TriangleAlert size={15} />
-                          {fieldState.error.message}
-                        </FieldError>
-                      )}
-                    </Field>
-                  )}
                 />
               );
             }
 
             return (
-              <Controller
-                name={name}
+              <FormFieldInput
                 control={control}
+                label={restProps.label}
+                placeholder={restProps.placeholder}
+                name={name}
+                type="text"
                 key={name}
-                render={({ field, fieldState }) => (
-                  <Field>
-                    <FieldLabel htmlFor={name} className="text-lg">
-                      {restProps.label}
-                    </FieldLabel>
-                    <div className="relative">
-                      <Input
-                        type={restProps.type}
-                        placeholder={restProps.placeholder}
-                        id={name}
-                        {...field}
-                      />
-                    </div>
-                    {fieldState.error && (
-                      <FieldError className="flex items-center gap-x-2">
-                        <TriangleAlert size={15} />
-                        {fieldState.error.message}
-                      </FieldError>
-                    )}
-                  </Field>
-                )}
               />
             );
           })}

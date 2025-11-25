@@ -17,19 +17,17 @@ export const Footer = ({ className }: Props) => {
   };
 
   return (
-    <footer className="relative py-5 border-t border-border">
+    <footer className="relative py-10 md:py-5 border-t border-border">
       <div
         className={`${className} flex flex-col md:flex-row items-center justify-center md:justify-between`}
       >
-        {/* BRAND */}
-        <div className="order-1 md:order-0 hidden md:block pt-5 md:pt-0">
+        <div className="order-1 md:order-0 pt-5 md:pt-0">
           <span className="text-xs text-muted-foreground">
             {`{`}coded by @fernandodev{`}`}
           </span>
           <p className="text-2xl">Forkbin {new Date().getFullYear()}</p>
         </div>
 
-        {/* ACTIONS */}
         <div className="flex items-center gap-x-5">
           <Button variant={"outline"} size={"icon"} onClick={onScrollTop}>
             <ArrowUp />
