@@ -208,6 +208,10 @@ body {
   @apply w-[90%] mx-auto;
 }
 
+.app-container {
+  @apply w-[95%] mx-auto;
+}
+
 .text-base {
   @apply text-[16px];
 }

@@ -4,7 +4,11 @@ import { ArrowUp, MailIcon, MessageCircleWarning } from "lucide-react";
 import { LuGithub } from "react-icons/lu";
 import { Button } from "./button";
 
-export const Footer = () => {
+interface Props {
+  className?: string;
+}
+
+export const Footer = ({ className }: Props) => {
   const onScrollTop = () => {
     window.scrollTo({
       top: 0,
@@ -13,8 +17,10 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="py-10 md:py-5 border-t border-border">
-      <div className="container flex flex-col md:flex-row items-center justify-center md:justify-between">
+    <footer className="relative py-10 md:py-5 border-t border-border">
+      <div
+        className={`${className} flex flex-col md:flex-row items-center justify-center md:justify-between`}
+      >
         <div className="order-1 md:order-0 pt-5 md:pt-0">
           <span className="text-xs text-muted-foreground">
             {`{`}coded by @fernandodev{`}`}

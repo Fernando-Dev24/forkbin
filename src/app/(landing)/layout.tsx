@@ -8,7 +8,7 @@ export default function LandingLayout({
   return (
     <>
       {children}
-      <Footer />
+      <Footer className="container" />
     </>
   );
 }
