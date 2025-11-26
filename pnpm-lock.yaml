@@ -35,6 +35,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.2.8
         version: 1.2.8(@types/react-dom@19.2.3(@types/react@19.2.6))(@types/react@19.2.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@supabase/ssr':
+        specifier: ^0.8.0
+        version: 0.8.0(@supabase/supabase-js@2.84.0)
       '@supabase/supabase-js':
         specifier: ^2.84.0
         version: 2.84.0
@@ -77,6 +80,9 @@ importers:
       resolvers:
         specifier: link:@hookform\resolvers
         version: link:@hookform/resolvers
+      sonner:
+        specifier: ^2.0.7
+        version: 2.0.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       tailwind-merge:
         specifier: ^3.4.0
         version: 3.4.0
@@ -984,6 +990,11 @@ packages:
     resolution: {integrity: sha512-ThqjxiCwWiZAroHnYPmnNl6tZk6jxGcG2a7Hp/3kcolPcMj89kWjUTA3cHmhdIWYsP84fHp8MAQjYWMLf7HEUg==}
     engines: {node: '>=20.0.0'}
 
+  '@supabase/ssr@0.8.0':
+    resolution: {integrity: sha512-/PKk8kNFSs8QvvJ2vOww1mF5/c5W8y42duYtXvkOSe+yZKRgTTZywYG2l41pjhNomqESZCpZtXuWmYjFRMV+dw==}
+    peerDependencies:
+      '@supabase/supabase-js': ^2.76.1
+
   '@supabase/storage-js@2.84.0':
     resolution: {integrity: sha512-vXvAJ1euCuhryOhC6j60dG8ky+lk0V06ubNo+CbhuoUv+sl39PyY0lc+k+qpQhTk/VcI6SiM0OECLN83+nyJ5A==}
     engines: {node: '>=20.0.0'}
@@ -1445,6 +1456,10 @@ packages:
   consola@3.4.2:
     resolution: {integrity: sha512-5IKcdX0nnYavi6G7TtOhwkYzyjfJlatbjMjuLSfE2kYT5pMDOilZ4OvMhi637CcDICTmz3wARPoyhqyX1Y+XvA==}
     engines: {node: ^14.18.0 || >=16.10.0}
+
+  cookie@1.1.0:
+    resolution: {integrity: sha512-vXiThu1/rlos7EGu8TuNZQEg2e9TvhH9dmS4T4ZVzB7Ao1agEZ6EG3sn5n+hZRYUgduISd1HpngFzAZiDGm5vQ==}
+    engines: {node: '>=18'}
 
   create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
@@ -2481,6 +2496,12 @@ packages:
     resolution: {integrity: sha512-ZX99e6tRweoUXqR+VBrslhda51Nh5MTQwou5tnUDgbtyM0dBgmhEDtWGP/xbKn6hqfPRHujUNwz5fy/wbbhnpw==}
     engines: {node: '>= 0.4'}
 
+  sonner@2.0.7:
+    resolution: {integrity: sha512-W6ZN4p58k8aDKA4XPcx2hpIQXBRAgyiWVkYhT7CvK6D3iAu7xjvVyhQHg2/iaKJZ1XVJ4r7XuwGL+WGEK37i9w==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+      react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
@@ -3414,6 +3435,11 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
+  '@supabase/ssr@0.8.0(@supabase/supabase-js@2.84.0)':
+    dependencies:
+      '@supabase/supabase-js': 2.84.0
+      cookie: 1.1.0
+
   '@supabase/storage-js@2.84.0':
     dependencies:
       tslib: 2.8.1
@@ -3886,6 +3912,8 @@ snapshots:
   confbox@0.2.2: {}
 
   consola@3.4.2: {}
+
+  cookie@1.1.0: {}
 
   create-require@1.1.1: {}
 
@@ -5118,6 +5146,11 @@ snapshots:
       side-channel-list: 1.0.0
       side-channel-map: 1.0.1
       side-channel-weakmap: 1.0.2
+
+  sonner@2.0.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   source-map-js@1.2.1: {}
 

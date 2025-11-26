@@ -2,7 +2,7 @@ import { AppSidebar, AppSidebarInset } from "@/components/app/ui";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Footer } from "@/components/ui";
 
-export default function AppLayout({
+export default async function AppLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

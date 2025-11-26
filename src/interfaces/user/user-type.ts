@@ -1,6 +1,8 @@
 import { Provider } from "@/generated/prisma/enums";
 import { Bin } from "../bin/bin-type";
 import { Fork } from "../fork/fork-type";
+import { UserGetPayload } from "../../generated/prisma/models/User";
+import { Prisma } from "@/generated/prisma/client";
 
 export interface User {
   id: string;
@@ -32,3 +34,11 @@ export interface Account {
 
   user: User;
 }
+
+export type UserSession = Prisma.UserGetPayload<{
+  select: {
+    id: true;
+    firstName: true;
+    lastName: true;
+  };
+}>;

@@ -9,6 +9,8 @@ import { FaGoogle } from "react-icons/fa";
 import { FiGithub } from "react-icons/fi";
 import { Logo } from "@/components/ui/logo";
 import { FormFieldInput } from "@/components/ui";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   const { isPasswordType, control, handleSubmit, onSubmit, togglePassword } =
@@ -16,6 +18,14 @@ export default function LoginPage() {
       email: "",
       password: "",
     });
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get("error") === "unauthorized") {
+      console.log("credentials error");
+    }
+  }, []);
 
   return (
     <>
@@ -30,9 +40,10 @@ export default function LoginPage() {
           control={control}
           name="email"
           label="Email"
-          placeholder="youremail@email.com"
+          placeholder="email@email.com"
           type="email"
           description="Enter your email"
+          id="email"
         />
 
         {/* PASSWORD */}
@@ -40,6 +51,7 @@ export default function LoginPage() {
           control={control}
           name="password"
           label="Password"
+          id="password"
           placeholder="Enter your password"
           type={isPasswordType ? "password" : "text"}
           description="It must be at least 6 characters long"

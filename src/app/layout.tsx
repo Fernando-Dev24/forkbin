@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { mainFont } from "@/fonts/fonts";
 import { ThemeProvider } from "@/components/theme-provider/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 import "../styles/globals.css";
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem={true}
         >
+          <Toaster richColors />
           {children}
         </ThemeProvider>
       </body>
