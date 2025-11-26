@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import { Button, FormFieldInput } from "@/components/ui";
 import {
   Dialog,
@@ -21,16 +22,21 @@ import {
   FieldDescription,
   FieldLabel,
 } from "@/components/ui/field";
-import { Checkbox } from "@radix-ui/react-checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const CreateBinDialog = () => {
-  const { control, handleSubmit } = useCreateBinForm(CreateBinSchema, {
-    title: "",
-    slug: "",
-    description: "",
-    isMockApi: false,
-    isPublic: false,
-  });
+  const { control, handleSubmit, onSubmit } = useCreateBinForm(
+    CreateBinSchema,
+    {
+      title: "",
+      slug: "",
+      description: "",
+      isMockApi: false,
+      isPublic: false,
+    }
+  );
+
+  const uniqueId = useId();
 
   return (
     <Dialog>
@@ -39,13 +45,13 @@ export const CreateBinDialog = () => {
       </DialogTrigger>
 
       {/* DIALOG CONTENT */}
-      <DialogContent className="sm:max-w-[425px] max-h-[80%] overflow-y-auto">
+      <DialogContent className="sm:max-w-[450px] max-h-[80%] overflow-y-auto">
         <DialogTitle>Create a new bin</DialogTitle>
         <DialogDescription>
           Fill all fields to start editing your new bin
         </DialogDescription>
 
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           {createBinFields.map((field) => (
             <FormFieldInput
               control={control}
@@ -53,6 +59,7 @@ export const CreateBinDialog = () => {
               name={field.name}
               placeholder={field.placeholder}
               key={field.name}
+              id={`${uniqueId}-${field.name}`}
               type="text"
             />
           ))}
@@ -60,21 +67,23 @@ export const CreateBinDialog = () => {
           <Separator className="my-5" />
 
           <div className="mt-5 space-y-5">
-            <div>
-              <Checkbox id="isPublic" />
+            <Field orientation={"horizontal"}>
+              <Checkbox id={`${uniqueId}-isPublic`} />
               <FieldContent>
-                <FieldLabel htmlFor="isPublic">Public</FieldLabel>
+                <FieldLabel htmlFor={`${uniqueId}-isPublic`}>Public</FieldLabel>
                 <FieldDescription>
                   If you mark your bin as public, it counts on community stats,
                   and anyone may fork it
                 </FieldDescription>
               </FieldContent>
-            </div>
+            </Field>
 
             <Field orientation={"horizontal"}>
-              <Checkbox id="isMockApi" />
+              <Checkbox id={`${uniqueId}-isMockApi`} />
               <FieldContent>
-                <FieldLabel htmlFor="isMockApi">Mock API</FieldLabel>
+                <FieldLabel htmlFor={`${uniqueId}-isMockApi`}>
+                  Mock API
+                </FieldLabel>
                 <FieldDescription>
                   Consider that if you mark this bin as mock API, it will must
                   fill the schema: METHOD {">"} STATUS CODE {">"} ENDPOINT {">"}{" "}

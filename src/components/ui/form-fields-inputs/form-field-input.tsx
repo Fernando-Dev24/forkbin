@@ -9,6 +9,7 @@ import { FormFieldProps } from "@/interfaces";
 export const FormFieldInput = <T extends FieldValues = FieldValues>({
   name,
   control,
+  id,
   ...props
 }: FormFieldProps<T>) => {
   return (
@@ -17,12 +18,12 @@ export const FormFieldInput = <T extends FieldValues = FieldValues>({
       control={control}
       render={({ field, fieldState }) => (
         <Field className={props.wrapperClassName}>
-          <FieldLabel htmlFor={name}>{props.label}</FieldLabel>
+          <FieldLabel htmlFor={id}>{props.label}</FieldLabel>
 
           <Input
             type={props.type}
             placeholder={props.placeholder}
-            id={name}
+            id={id}
             {...field}
           />
 

@@ -5,6 +5,7 @@ export interface FormFieldProps<T extends FieldValues = FieldValues> {
   placeholder: string;
   label: string;
   type: string;
+  id: string;
   control: Control<T>;
   description?: string;
   wrapperClassName?: string;

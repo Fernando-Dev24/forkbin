@@ -1,5 +1,4 @@
-import { ForwardRefExoticComponent, RefAttributes } from "react";
-import { Globe, Home, LucideProps, User } from "lucide-react";
+import { DollarSign, Globe, Home, User } from "lucide-react";
 
 export const sidebarItems = {
   navMain: [
@@ -12,6 +11,11 @@ export const sidebarItems = {
       title: "Community",
       url: "/app/community", // TODO: This could be changed cause this path is public
       icon: Globe,
+    },
+    {
+      title: "Pricing",
+      url: "/pricing",
+      icon: DollarSign,
     },
     {
       title: "Profile",

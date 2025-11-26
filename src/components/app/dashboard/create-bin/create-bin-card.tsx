@@ -21,6 +21,7 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useId } from "react";
 
 export const CreateBinCard = () => {
   const { control, reset, handleSubmit, onSubmit } = useCreateBinForm(
@@ -33,6 +34,8 @@ export const CreateBinCard = () => {
       isMockApi: false,
     }
   );
+
+  const uniqueId = useId();
 
   return (
     <>
@@ -51,6 +54,7 @@ export const CreateBinCard = () => {
                 <FormFieldInput
                   key={name}
                   control={control}
+                  id={`${uniqueId}-${name}`}
                   label={label}
                   name={name}
                   placeholder={placeholder}
@@ -65,9 +69,11 @@ export const CreateBinCard = () => {
             {/* CHECKBOXES */}
             <div className="mt-5 space-y-5">
               <Field orientation={"horizontal"}>
-                <Checkbox id="isPublic" />
+                <Checkbox id={`${uniqueId}-isPublic`} />
                 <FieldContent>
-                  <FieldLabel htmlFor="isPublic">Public</FieldLabel>
+                  <FieldLabel htmlFor={`${uniqueId}-isPublic`}>
+                    Public
+                  </FieldLabel>
                   <FieldDescription>
                     If you mark your bin as public, it counts on community
                     stats, and anyone may fork it
@@ -76,9 +82,11 @@ export const CreateBinCard = () => {
               </Field>
 
               <Field orientation={"horizontal"}>
-                <Checkbox id="isMockApi" />
+                <Checkbox id={`${uniqueId}-isMockApi`} />
                 <FieldContent>
-                  <FieldLabel htmlFor="isMockApi">Mock API</FieldLabel>
+                  <FieldLabel htmlFor={`${uniqueId}-isMockApi`}>
+                    Mock API
+                  </FieldLabel>
                   <FieldDescription>
                     Consider that if you mark this bin as mock API, it will must
                     fill the schema: METHOD {">"} STATUS CODE {">"} ENDPOINT{" "}
