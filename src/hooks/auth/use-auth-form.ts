@@ -1,7 +1,7 @@
-import { AnyZodSchema, InferZod } from "@/interfaces";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { AnyZodSchema, InferZod } from "@/interfaces";
 
 export const useAuthForm = <TSchema extends AnyZodSchema>(
   schema: TSchema,
@@ -14,10 +14,6 @@ export const useAuthForm = <TSchema extends AnyZodSchema>(
 
   const [isPasswordType, setIsPasswordType] = useState(true);
 
-  const onSubmit = (formValues: InferZod<TSchema>) => {
-    console.log({ formValues });
-  };
-
   const togglePassword = () => {
     setIsPasswordType(!isPasswordType);
   };
@@ -27,6 +23,5 @@ export const useAuthForm = <TSchema extends AnyZodSchema>(
     control,
     togglePassword,
     handleSubmit,
-    onSubmit,
   };
 };

@@ -4,7 +4,6 @@ import { Provider } from "../generated/prisma/enums";
 interface UserSeed {
   supabaseId: string;
   email: string;
-  password?: string;
   username: string;
   firstName?: string;
   lastName?: string;
@@ -44,7 +43,6 @@ export const initialData: SeedData = {
       email: "refer@gmail.com",
       username: "fernando.ortiz",
       supabaseId: "12345666778",
-      password: bcrypt.hashSync("123456", 10),
     },
   ],
   account: {

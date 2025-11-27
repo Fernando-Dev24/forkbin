@@ -1,4 +1,4 @@
-import { getPopularBins } from "@/action";
+import { getPopularBins } from "@/actions";
 import { PopularBinItem } from "./popular-bin-item";
 
 export const PopularBins = async () => {

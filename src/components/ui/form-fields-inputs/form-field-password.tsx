@@ -10,6 +10,7 @@ import { Input } from "../input";
 interface PasswordFieldProps<T extends FieldValues = FieldValues>
   extends FormFieldProps<T> {
   isPasswordType: boolean;
+  renderBtn?: boolean;
   togglePassword: () => void;
 }
 
@@ -18,6 +19,7 @@ export const FormFieldPassword = <T extends FieldValues = FieldValues>({
   control,
   isPasswordType,
   togglePassword,
+  renderBtn,
   ...props
 }: PasswordFieldProps<T>) => {
   return (
@@ -36,15 +38,17 @@ export const FormFieldPassword = <T extends FieldValues = FieldValues>({
               {...field}
             />
 
-            <Button
-              type="button"
-              size={"icon"}
-              variant={"ghost"}
-              className="absolute top-0 right-0"
-              onClick={togglePassword}
-            >
-              {isPasswordType ? <Eye /> : <EyeClosed />}
-            </Button>
+            {renderBtn && (
+              <Button
+                type="button"
+                size={"icon"}
+                variant={"ghost"}
+                className="absolute top-0 right-0"
+                onClick={togglePassword}
+              >
+                {isPasswordType ? <Eye /> : <EyeClosed />}
+              </Button>
+            )}
           </div>
 
           {fieldState.error ? (

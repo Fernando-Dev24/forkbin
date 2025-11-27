@@ -3,7 +3,6 @@
 import { Controller, type FieldValues } from "react-hook-form";
 import { Field, FieldDescription, FieldError, FieldLabel } from "../field";
 import { Input } from "../input";
-import { TriangleAlert } from "lucide-react";
 import { FormFieldProps } from "@/interfaces";
 
 export const FormFieldInput = <T extends FieldValues = FieldValues>({
