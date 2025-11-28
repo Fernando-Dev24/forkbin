@@ -1,7 +1,6 @@
 import { Provider } from "@/generated/prisma/enums";
 import { Bin } from "../bin/bin-type";
 import { Fork } from "../fork/fork-type";
-import { UserGetPayload } from "../../generated/prisma/models/User";
 import { Prisma } from "@/generated/prisma/client";
 
 export interface User {

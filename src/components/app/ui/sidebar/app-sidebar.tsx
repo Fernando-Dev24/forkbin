@@ -1,6 +1,7 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -9,6 +10,7 @@ import {
 import { Logo } from "@/components/ui";
 import { AppSidebarNavMain } from "./app-sidebar-nav-main";
 import { sidebarItems } from "./sidebar-items";
+import { AppSidebarUser } from "./app-sidebar-user";
 
 export const AppSidebar = () => {
   return (
@@ -27,6 +29,9 @@ export const AppSidebar = () => {
       </SidebarContent>
 
       {/* // TODO: Add user section if needed */}
+      <SidebarFooter>
+        <AppSidebarUser />
+      </SidebarFooter>
     </Sidebar>
   );
 };

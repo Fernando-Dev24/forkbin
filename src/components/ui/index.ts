@@ -1,4 +1,5 @@
 export { Logo } from "./logo";
+export { LinkButton } from "./link-button";
 export { Button } from "./button";
 export { Footer } from "./footer";
 export { SuspenseWrapper } from "./suspense-wrapper";

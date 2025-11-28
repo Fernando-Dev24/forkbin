@@ -22,6 +22,19 @@ export const onSignUp = async (formData: FormData) => {
 
   // DONE: Sign up user
   try {
+    // Validate if username already exists
+    const usernameResp = await checkUserUniqueFields({
+      email: data.email,
+      username: data.username,
+    });
+
+    if (!usernameResp.ok) {
+      return {
+        ok: false,
+        message: usernameResp.message,
+      };
+    }
+
     const { ok, message, userId } = await createUserInSupabase(
       data.email,
       data.password
@@ -43,6 +56,13 @@ export const onSignUp = async (formData: FormData) => {
         lastName: data.lastName,
         username: data.username,
         email: data.email,
+        accounts: {
+          create: {
+            id: userId,
+            provider: "email",
+            providerAccountId: userId!,
+          },
+        },
       },
     });
 
@@ -79,4 +99,35 @@ export const createUserInSupabase = async (email: string, password: string) => {
       message: "Error creating user in supabase",
     };
   }
+};
+
+interface Params {
+  username: string;
+  email: string;
+  ignoreUserId?: string;
+}
+
+const checkUserUniqueFields = async ({
+  username,
+  email,
+  ignoreUserId,
+}: Params) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      OR: [{ email }, { username }],
+      ...(ignoreUserId && { NOT: { id: ignoreUserId } }),
+    },
+  });
+
+  if (user) {
+    return {
+      ok: false,
+      message: "Username or email are already in use",
+    };
+  }
+
+  return {
+    ok: true,
+    message: "",
+  };
 };

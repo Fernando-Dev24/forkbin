@@ -13,7 +13,8 @@ import { FiGithub } from "react-icons/fi";
 import { FormFieldInput, SubmitButton, Logo } from "@/components/ui";
 import { FormErrorState, InferZod } from "@/interfaces";
 import { getFormData } from "@/helpers/get-form-data/get-form-data";
-import { onLogin } from "@/actions";
+import { onLogin, onSignUpWithProvider } from "@/actions";
+import { Provider } from "@supabase/supabase-js";
 
 export default function LoginPage() {
   const { isPasswordType, control, togglePassword, handleSubmit } = useAuthForm(
@@ -55,6 +56,16 @@ export default function LoginPage() {
 
       router.push("/app");
     });
+  };
+
+  const signUpProvider = async (provider: Provider) => {
+    const { ok, message, redirectUrl } = await onSignUpWithProvider(provider);
+    if (!ok) {
+      setFormErrorState({ ok, message });
+      return;
+    }
+
+    router.push(redirectUrl!);
   };
 
   useEffect(() => {
@@ -107,12 +118,13 @@ export default function LoginPage() {
 
         <FieldSeparator className="mb-3">or continue with</FieldSeparator>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-5 md:gap-5">
-          <Button variant={"outline"} type="button">
-            <FaGoogle />
-            Google
-          </Button>
-          <Button variant={"outline"} type="button">
+        <div className="flex items-center justify-center">
+          <Button
+            variant={"outline"}
+            className="w-3/4"
+            type="button"
+            onClick={() => signUpProvider("github")}
+          >
             <FiGithub />
             GitHub
           </Button>

@@ -15,11 +15,16 @@ type ActionError =
   | Error
   | unknown;
 
+const uniqueErrorCode = "P2002";
+
 export const handleActionError = (error: ActionError) => {
   let message = "An unexpected error occurred while processing the request";
 
   switch (true) {
     case error instanceof PrismaClientKnownRequestError:
+      if (error.code === uniqueErrorCode) {
+        message = "Some of the unique fields have been violated";
+      }
       message = `A known request error occurred while processing the request`;
       break;
     case error instanceof PrismaClientUnknownRequestError:
@@ -35,6 +40,7 @@ export const handleActionError = (error: ActionError) => {
       message = `An authentication error occurred while processing the request`;
       break;
     case error instanceof Error:
+      console.log(error);
       message = `An error occurred while processing the request`;
       break;
     default:

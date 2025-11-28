@@ -1,6 +1,7 @@
 import { AppSidebar, AppSidebarInset } from "@/components/app/ui";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Footer } from "@/components/ui";
+import { SessionProvider } from "@/providers";
 
 export default async function AppLayout({
   children,
@@ -9,15 +10,17 @@ export default async function AppLayout({
 }>) {
   return (
     <>
-      <SidebarProvider defaultOpen={false}>
-        <AppSidebar />
+      <SessionProvider>
+        <SidebarProvider defaultOpen={false}>
+          <AppSidebar />
 
-        <SidebarInset>
-          <AppSidebarInset />
-          <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
-          <Footer className="app-container" />
-        </SidebarInset>
-      </SidebarProvider>
+          <SidebarInset>
+            <AppSidebarInset />
+            <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
+            <Footer className="app-container" />
+          </SidebarInset>
+        </SidebarProvider>
+      </SessionProvider>
     </>
   );
 }

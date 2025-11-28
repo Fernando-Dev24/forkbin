@@ -1,6 +1,10 @@
 "use client";
 
+import { useState, useTransition } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { type Provider } from "@supabase/supabase-js";
 import {
   Button,
   FormError,
@@ -11,16 +15,12 @@ import {
 import { useAuthForm } from "@/hooks";
 import { SignUpSchema } from "@/schemas/auth";
 import { FieldSeparator } from "@/components/ui/field";
-import { FaGoogle } from "react-icons/fa";
 import { FiGithub } from "react-icons/fi";
 import { signUpFields } from "./sign-up-fields";
-import { useState, useTransition } from "react";
 import { FormErrorState, InferZod } from "@/interfaces";
 import { getFormData } from "@/helpers/get-form-data/get-form-data";
-import { onSignUp } from "@/actions";
-import { SubmitButton } from "../../../components/ui/submit-button/submit-button";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { SubmitButton } from "@/components/ui";
+import { onSignUp, onSignUpWithProvider } from "@/actions";
 
 export default function SignUp() {
   const { control, isPasswordType, togglePassword, handleSubmit } = useAuthForm(
@@ -65,6 +65,16 @@ export default function SignUp() {
 
       router.push("/app");
     });
+  };
+
+  const signUpProvider = async (provider: Provider) => {
+    const { ok, message, redirectUrl } = await onSignUpWithProvider(provider);
+    if (!ok) {
+      setFormErrorState({ ok, message });
+      return;
+    }
+
+    router.push(redirectUrl!);
   };
 
   return (
@@ -116,12 +126,13 @@ export default function SignUp() {
 
         <FieldSeparator className="mb-3">or continue with</FieldSeparator>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-5 md:gap-5">
-          <Button variant={"outline"} type="button">
-            <FaGoogle />
-            Google
-          </Button>
-          <Button variant={"outline"} type="button">
+        <div className="flex items-center justify-center">
+          <Button
+            variant={"outline"}
+            type="button"
+            className="w-3/4"
+            onClick={() => signUpProvider("github")}
+          >
             <FiGithub />
             GitHub
           </Button>
