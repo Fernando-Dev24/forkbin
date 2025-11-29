@@ -1,25 +1,19 @@
 import { ProjectCard } from "./project-card";
-import { CreateBinDialog } from "../create-bin/create-bin-dialog";
+import { ProjectsNav } from "./projects-nav";
 
 export const Projects = () => {
   return (
-    <div className="space-y-10">
-      <div>
+    <div className="md:py-10 md:px-20 space-y-10">
+      <div className="flex flex-col justify-center">
         <h2 className="text-3xl font-semibold">Hey, Fernando</h2>
-        <p className="text-muted-foreground">
-          What you&apos;re going to create today?
-        </p>
+        <p className="text-muted-foreground">Your bins</p>
       </div>
 
+      <ProjectsNav />
+
       <div>
-        <div className="flex items-baseline justify-between">
-          <h4 className="mb-5 text-lg">Your bins</h4>
-          <div className="block md:hidden">
-            <CreateBinDialog />
-          </div>
-        </div>
-        <div className="space-y-5">
-          {Array.from({ length: 4 }).map((_, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {Array.from({ length: 6 }).map((_, i) => (
             <ProjectCard key={i} />
           ))}
         </div>
