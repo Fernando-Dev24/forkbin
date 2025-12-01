@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -29,14 +30,20 @@ export const ProjectCard = () => {
           </p>
         </CardContent>
 
-        <CardFooter className="space-x-5">
-          <LinkButton href="/app/edit/b/abc">
-            <Pencil />
-            Edit
-          </LinkButton>
-          <Button size={"icon"} variant={"outline"}>
-            <Settings />
-          </Button>
+        <CardFooter className="flex justify-between items-center">
+          <div className="space-x-5">
+            <LinkButton href="/app/edit/b/abc">
+              <Pencil />
+              Edit
+            </LinkButton>
+            <Button size={"icon"} variant={"outline"}>
+              <Settings />
+            </Button>
+          </div>
+          <div className="text-right space-y-1">
+            <Badge variant={"secondary"}>Public</Badge>
+            <p className="text-xs text-muted-foreground">1/12/2025</p>
+          </div>
         </CardFooter>
       </Card>
     </>

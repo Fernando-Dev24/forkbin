@@ -6,7 +6,7 @@ const VIEW_OPTIONS = {
   table: "table",
 } as const;
 
-type ViewOption = keyof typeof VIEW_OPTIONS;
+export type ViewOption = keyof typeof VIEW_OPTIONS;
 
 interface ViewState {
   viewAs: ViewOption;

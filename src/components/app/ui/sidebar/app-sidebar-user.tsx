@@ -18,20 +18,23 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { useSession } from "@/providers";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { onSignOut } from "@/actions";
+import { toast } from "sonner";
+import { useSession } from "@/providers";
 
 export function AppSidebarUser() {
   const { isMobile } = useSidebar();
   const { session } = useSession();
-  const fullName = session?.user.user_metadata.name as string;
-
   const router = useRouter();
 
   const handleLogout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
+    const { ok, message } = await onSignOut();
+    if (!ok) {
+      toast.error(message, { position: "top-center" });
+      return;
+    }
+
     router.push("/auth/login");
   };
 
@@ -45,18 +48,17 @@ export function AppSidebarUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage
-                  src={session?.user.user_metadata.avatar_url}
-                  alt={"user.name"}
-                />
+                <AvatarImage src={session?.avatar!} alt={session.username} />
                 <AvatarFallback className="rounded-lg">
                   <User />
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{fullName}</span>
+                <span className="truncate font-medium">
+                  {session.firstName} {session.lastName}
+                </span>
                 <span className="truncate text-xs text-muted-foreground">
-                  @{session?.user.user_metadata.user_name}
+                  @{session.username}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -71,18 +73,17 @@ export function AppSidebarUser() {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage
-                    src={session?.user?.user_metadata?.avatar_url}
-                    alt={"user.name"}
-                  />
+                  <AvatarImage src={session?.avatar!} alt={session.username} />
                   <AvatarFallback className="rounded-lg">
                     <User />
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{fullName}</span>
+                  <span className="truncate font-medium">
+                    {session.firstName} {session.lastName}
+                  </span>
                   <span className="truncate text-xs text-muted-foreground">
-                    @{session?.user.user_metadata.user_name}
+                    @{session.username}
                   </span>
                 </div>
               </div>

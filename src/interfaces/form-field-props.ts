@@ -9,4 +9,5 @@ export interface FormFieldProps<T extends FieldValues = FieldValues> {
   control: Control<T>;
   description?: string;
   wrapperClassName?: string;
+  renderLabel?: boolean;
 }

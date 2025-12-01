@@ -6,6 +6,12 @@ import { prisma } from "@/lib/prisma";
 import { createSSRClient } from "@/lib/supabase/server";
 import { SignUpSchema } from "@/schemas/auth";
 
+interface CheckUserParams {
+  username: string;
+  email: string;
+  ignoreUserId?: string;
+}
+
 export const onSignUp = async (formData: FormData) => {
   const values = Object.fromEntries(formData.entries());
   const { ok, data, message } = validateSchema(
@@ -35,7 +41,7 @@ export const onSignUp = async (formData: FormData) => {
       };
     }
 
-    const { ok, message, userId } = await createUserInSupabase(
+    const { ok, message, userId } = await signUpSupabase(
       data.email,
       data.password
     );
@@ -74,7 +80,7 @@ export const onSignUp = async (formData: FormData) => {
   }
 };
 
-export const createUserInSupabase = async (email: string, password: string) => {
+const signUpSupabase = async (email: string, password: string) => {
   try {
     const supabase = await createSSRClient();
     const { data, error } = await supabase.auth.signUp({
@@ -101,17 +107,11 @@ export const createUserInSupabase = async (email: string, password: string) => {
   }
 };
 
-interface Params {
-  username: string;
-  email: string;
-  ignoreUserId?: string;
-}
-
 const checkUserUniqueFields = async ({
   username,
   email,
   ignoreUserId,
-}: Params) => {
+}: CheckUserParams) => {
   const user = await prisma.user.findFirst({
     where: {
       OR: [{ email }, { username }],

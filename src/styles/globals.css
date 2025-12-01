@@ -229,3 +229,12 @@ div.glass-container {
 .skeleton-btn {
   @apply w-24 h-6 rounded-md;
 }
+
+/* TABLE STYLES */
+th.projects-table-th {
+  @apply px-6 py-3 font-medium;
+}
+
+td.projects-table-td {
+  @apply px-6 py-3;
+}

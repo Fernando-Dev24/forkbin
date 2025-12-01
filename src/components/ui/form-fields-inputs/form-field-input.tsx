@@ -9,6 +9,7 @@ export const FormFieldInput = <T extends FieldValues = FieldValues>({
   name,
   control,
   id,
+  renderLabel,
   ...props
 }: FormFieldProps<T>) => {
   return (
@@ -17,7 +18,7 @@ export const FormFieldInput = <T extends FieldValues = FieldValues>({
       control={control}
       render={({ field, fieldState }) => (
         <Field className={props.wrapperClassName}>
-          <FieldLabel htmlFor={id}>{props.label}</FieldLabel>
+          {renderLabel && <FieldLabel htmlFor={id}>{props.label}</FieldLabel>}
 
           <Input
             type={props.type}

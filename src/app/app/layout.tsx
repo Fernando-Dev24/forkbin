@@ -1,6 +1,8 @@
 import { AppSidebar, AppSidebarInset } from "@/components/app/ui";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Footer } from "@/components/ui";
+import { getUserSession } from "@/actions";
+import { redirect } from "next/navigation";
 import { SessionProvider } from "@/providers";
 
 export default async function AppLayout({
@@ -8,19 +10,20 @@ export default async function AppLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <>
-      <SessionProvider>
-        <SidebarProvider defaultOpen={false}>
-          <AppSidebar />
+  const { user } = await getUserSession();
+  if (!user) redirect("/auth/login?error=unauthorized");
 
-          <SidebarInset>
-            <AppSidebarInset />
-            <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
-            <Footer className="app-container" />
-          </SidebarInset>
-        </SidebarProvider>
-      </SessionProvider>
-    </>
+  return (
+    <SessionProvider session={user}>
+      <SidebarProvider defaultOpen={false}>
+        <AppSidebar />
+
+        <SidebarInset>
+          <AppSidebarInset />
+          <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
+          <Footer className="app-container" />
+        </SidebarInset>
+      </SidebarProvider>
+    </SessionProvider>
   );
 }

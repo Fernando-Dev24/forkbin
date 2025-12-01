@@ -28,7 +28,6 @@ export const AppSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
 
-      {/* // TODO: Add user section if needed */}
       <SidebarFooter>
         <AppSidebarUser />
       </SidebarFooter>

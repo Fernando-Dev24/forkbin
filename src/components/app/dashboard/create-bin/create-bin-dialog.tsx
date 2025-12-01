@@ -41,7 +41,9 @@ export const CreateBinDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default">Create new bin</Button>
+        <Button variant="default" className="w-full md:w-auto">
+          Create new bin
+        </Button>
       </DialogTrigger>
 
       {/* DIALOG CONTENT */}
@@ -61,6 +63,7 @@ export const CreateBinDialog = () => {
               key={field.name}
               id={`${uniqueId}-${field.name}`}
               type="text"
+              renderLabel
             />
           ))}
 
