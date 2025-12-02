@@ -1,23 +1,29 @@
 "use client";
 
 import { useView } from "@/store/";
-import { ProjectsNav } from "./projects-nav";
 import { ProjectsTable } from "./projects-table";
 import { ProjectsCardWrapper } from "./projects-cards-wrapper";
-import { Empty } from "@/components/ui";
+import { BinsByUserPayload } from "@/interfaces";
+import { ProjectCard } from "./project-card";
 
-export const Projects = () => {
+export interface BinItemsProp {
+  bins: BinsByUserPayload[];
+}
+
+export const Projects = ({ bins }: BinItemsProp) => {
   const { viewAs } = useView();
 
   return (
-    <div className="md:py-10 md:px-20 space-y-10">
-      <ProjectsNav />
+    <>
+      {viewAs === "grid" && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {bins.map((bin) => (
+            <ProjectCard key={bin.id} bin={bin} />
+          ))}
+        </div>
+      )}
 
-      {/* <Empty /> */}
-      <div>
-        {viewAs === "grid" && <ProjectsCardWrapper />}
-        {viewAs === "table" && <ProjectsTable />}
-      </div>
-    </div>
+      {viewAs === "table" && <ProjectsTable bins={bins} />}
+    </>
   );
 };

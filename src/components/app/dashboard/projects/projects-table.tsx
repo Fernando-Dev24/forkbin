@@ -1,14 +1,15 @@
 import {
   Table,
-  TableCaption,
   TableHeader,
   TableRow,
   TableHead,
   TableBody,
   TableCell,
 } from "@/components/ui/table";
+import { BinItemsProp } from "./projects";
+import { formatDate } from "@/helpers/date/format-date";
 
-export const ProjectsTable = () => {
+export const ProjectsTable = ({ bins }: BinItemsProp) => {
   return (
     <div className="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded border border-default">
       <Table className="w-full text-sm text-left rtl:text-right text-body">
@@ -22,12 +23,18 @@ export const ProjectsTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody className="bg-secondary/10 border-b border-default">
-          {Array.from({ length: 6 }).map((_, index) => (
-            <TableRow key={index}>
-              <TableCell className="projects-table-td">{"Bin Title"}</TableCell>
-              <TableCell className="projects-table-td">{"Forks"}</TableCell>
-              <TableCell className="projects-table-td">{"IsPublic"}</TableCell>
-              <TableCell className="projects-table-td">1/12/2025</TableCell>
+          {bins.map((bin) => (
+            <TableRow key={bin.id}>
+              <TableCell className="projects-table-td">{bin.title}</TableCell>
+              <TableCell className="projects-table-td">
+                {bin._count.forks}
+              </TableCell>
+              <TableCell className="projects-table-td">
+                {bin.isPublic ? "Public" : "Private"}
+              </TableCell>
+              <TableCell className="projects-table-td">
+                {formatDate(bin.updatedAt)}
+              </TableCell>
               <TableCell className="projects-table-td text-right">
                 {"Action"}
               </TableCell>

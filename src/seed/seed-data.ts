@@ -4,6 +4,7 @@ import { Provider } from "../generated/prisma/enums";
 interface UserSeed {
   supabaseId: string;
   email: string;
+  password?: string;
   username: string;
   firstName?: string;
   lastName?: string;
@@ -55,7 +56,7 @@ export const initialData: SeedData = {
       title: "GitHub Users API",
       description: "Mock completo de usuarios GitHub",
       slug: "mock/github-users",
-      isMockApi: true,
+      isMockApi: false,
       isPublic: true,
       tags: ["github", "mock", "popular"],
       forksCount: 2847,

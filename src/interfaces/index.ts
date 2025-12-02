@@ -4,3 +4,4 @@ export * from "./zod/zod-types";
 export * from "./form-field-props";
 export * from "./actions/errors/form-schema-error";
 export * from "./actions/auth/get-session";
+export * from "./actions/bins/get-bins-by-user";

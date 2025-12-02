@@ -9,24 +9,27 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/link-button";
+import { formatDate } from "@/helpers/date/format-date";
+import { BinsByUserPayload } from "@/interfaces";
 import { Pencil, Settings, StarIcon } from "lucide-react";
 
-export const ProjectCard = () => {
+interface Props {
+  bin: BinsByUserPayload;
+}
+
+export const ProjectCard = ({ bin }: Props) => {
   return (
     <>
       <Card>
         <CardHeader>
-          <CardTitle>Card Title</CardTitle>
-          <CardDescription>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero nam
-            numquam accusamus neque repellat fugit ipsa.
-          </CardDescription>
+          <CardTitle>{bin.title}</CardTitle>
+          <CardDescription>{bin.description}</CardDescription>
         </CardHeader>
 
         <CardContent>
           <p className="flex items-center gap-x-2">
             <StarIcon />
-            24 forks
+            {bin._count.forks} forks
           </p>
         </CardContent>
 
@@ -41,8 +44,12 @@ export const ProjectCard = () => {
             </Button>
           </div>
           <div className="text-right space-y-1">
-            <Badge variant={"secondary"}>Public</Badge>
-            <p className="text-xs text-muted-foreground">1/12/2025</p>
+            <Badge variant={"secondary"}>
+              {bin.isPublic ? "Public" : "Private"}{" "}
+            </Badge>
+            <p className="text-xs text-muted-foreground">
+              {formatDate(bin.updatedAt)}
+            </p>
           </div>
         </CardFooter>
       </Card>

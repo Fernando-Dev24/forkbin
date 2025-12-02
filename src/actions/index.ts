@@ -8,3 +8,4 @@ export { getUserSession } from "./auth/get-session";
 
 // * bins
 export { getPopularBins } from "./bins/get-popular-bins";
+export { getBinsByUser } from "./bins/get-bins-by-user";

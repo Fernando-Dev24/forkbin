@@ -24,7 +24,7 @@ enum Provider {
 // USER
 // ================================
 model User {
-  id         String   @id @default(cuid())          // ID propio de nuestra app
+  id         String   @id @default(uuid())          // ID propio de nuestra app
   supabaseId String   @unique                       // UID de auth.users (Supabase Auth)
   email      String   @unique                       // Viene de GitHub/Google/email
   username   String   @unique                       // @tunombre
@@ -48,7 +48,7 @@ model User {
 // ACCOUNT (para OAuth GitHub/Google)
 // ================================
 model Account {
-  id                 String  @id @default(cuid())
+  id                 String  @id @default(uuid())
   userId             String                        // → User.id
   provider           Provider  // "github" | "google"
   providerAccountId  String  // ID del usuario en GitHub/Google (ej: 12345678)
@@ -66,7 +66,7 @@ model Account {
 // BIN
 // ================================
 model Bin {
-  id            String    @id @default(cuid())
+  id            String    @id @default(uuid())
   slug          String    @unique                     // URL bonita: /b/username/titulo-lindo
   title         String
   description   String?
@@ -106,7 +106,7 @@ model Bin {
 // FORK → ¡LA TABLA QUE TÚ QUISISTE Y TIENE TODO EL SENTIDO!
 // ================================
 model Fork {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
 
   binId     String                             // → Bin.id (el bin ORIGINAL que fue forkeado)
   userId    String                             // → User.id (quién hizo el fork)
