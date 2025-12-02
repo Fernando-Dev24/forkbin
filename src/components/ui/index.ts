@@ -8,3 +8,4 @@ export { FormFieldPassword } from "./form-fields-inputs/form-field-password";
 export { SubmitButton } from "./submit-button/submit-button";
 export { FormError } from "./form-error/form-error";
 export { Empty } from "./empty/empty";
+export { PaginationWrapper } from "./pagination/pagination-wrapper";
