@@ -5,10 +5,15 @@ import { PaginationOptions } from "@/interfaces";
 import { prisma } from "@/lib/prisma";
 import { createSSRClient } from "@/lib/supabase/server";
 
+interface Params extends PaginationOptions {
+  title?: string;
+}
+
 export const getBinsByUser = async ({
   take = 6,
   page = 1,
-}: PaginationOptions) => {
+  title = "",
+}: Params) => {
   if (isNaN(+page)) page = 1;
   if (page < 1) page = 1;
 
@@ -22,6 +27,10 @@ export const getBinsByUser = async ({
     const bins = await prisma.bin.findMany({
       where: {
         authorId: userId,
+        title: {
+          contains: title,
+          mode: "insensitive",
+        },
       },
       select: {
         id: true,

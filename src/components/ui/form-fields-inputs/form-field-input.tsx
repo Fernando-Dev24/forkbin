@@ -17,7 +17,7 @@ export const FormFieldInput = <T extends FieldValues = FieldValues>({
       name={name}
       control={control}
       render={({ field, fieldState }) => (
-        <Field className={props.wrapperClassName}>
+        <Field className={`${props.wrapperClassName} mb-5`}>
           {renderLabel && <FieldLabel htmlFor={id}>{props.label}</FieldLabel>}
 
           <Input
