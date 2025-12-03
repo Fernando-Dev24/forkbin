@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -11,13 +10,10 @@ import {
 import { LinkButton } from "@/components/ui/link-button";
 import { formatDate } from "@/helpers/date/format-date";
 import { BinsByUserPayload } from "@/interfaces";
-import { Pencil, Settings, StarIcon } from "lucide-react";
+import { Pencil, StarIcon } from "lucide-react";
+import { ProjectDropdownMenu } from "./project-dropdown-menu";
 
-interface Props {
-  bin: BinsByUserPayload;
-}
-
-export const ProjectCard = ({ bin }: Props) => {
+export const ProjectCard = (bin: BinsByUserPayload) => {
   return (
     <>
       <Card>
@@ -39,9 +35,7 @@ export const ProjectCard = ({ bin }: Props) => {
               <Pencil />
               Edit
             </LinkButton>
-            <Button size={"icon"} variant={"outline"}>
-              <Settings />
-            </Button>
+            <ProjectDropdownMenu />
           </div>
           <div className="text-right space-y-1">
             <Badge variant={"secondary"}>

@@ -16,7 +16,12 @@ export const ProjectSearch = () => {
         label="Search bin"
         wrapperClassName="gap-0"
       />
-      <Button type="button" variant={"destructive"} onClick={() => reset()}>
+      <Button
+        type="button"
+        variant={"ghost"}
+        size={"icon"}
+        onClick={() => reset()}
+      >
         <Trash />
       </Button>
     </form>

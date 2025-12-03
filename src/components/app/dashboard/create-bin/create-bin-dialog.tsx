@@ -47,7 +47,7 @@ export const CreateBinDialog = () => {
       </DialogTrigger>
 
       {/* DIALOG CONTENT */}
-      <DialogContent className="sm:max-w-[500px] lg:max-w-[50%] overflow-y-auto">
+      <DialogContent className="max-w-[90%] max-h-[80%] md:h-auto lg:max-w-[50%] overflow-y-auto">
         <DialogTitle>Create a new bin</DialogTitle>
         <DialogDescription>
           Fill all fields to start editing your new bin
