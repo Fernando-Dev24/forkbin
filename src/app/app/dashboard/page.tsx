@@ -1,6 +1,5 @@
 import { getBinsByUser } from "@/actions";
-import { ProjectCard } from "@/components/app/dashboard/projects/project-card";
-import { ProjectsNav } from "@/components/app/dashboard/projects/projects-nav";
+import { ProjectsWrapper, ProjectsNav } from "@/components/app/dashboard";
 import { Empty, PaginationWrapper } from "@/components/ui";
 import { redirect } from "next/navigation";
 
@@ -24,12 +23,7 @@ export default async function DashboardPage({ searchParams }: Props) {
       {bins.length < 1 && <Empty />}
       {bins.length > 0 && (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {bins.map((bin) => (
-              <ProjectCard key={bin.id} {...bin} />
-            ))}
-          </div>
-
+          <ProjectsWrapper bins={bins} />
           <PaginationWrapper totalPages={totalPages} />
         </>
       )}

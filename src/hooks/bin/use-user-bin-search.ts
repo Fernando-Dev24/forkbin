@@ -1,3 +1,5 @@
+"use client";
+
 import { InferZod } from "@/interfaces";
 import { SearchBinSchema } from "@/schemas/projects";
 import { zodResolver } from "@hookform/resolvers/zod";

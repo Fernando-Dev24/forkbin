@@ -7,9 +7,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useSheetType } from "@/hooks";
+import { BinsByUserPayload } from "@/interfaces";
 import { Edit, Settings, Share, Trash } from "lucide-react";
 
-export const ProjectDropdownMenu = () => {
+export const ProjectDropdownMenu = (bin: BinsByUserPayload) => {
+  const { onToggle } = useSheetType<BinsByUserPayload>();
+
+  const handleSetBin = () => onToggle(true, bin);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -20,7 +26,7 @@ export const ProjectDropdownMenu = () => {
       <DropdownMenuContent>
         <DropdownMenuLabel>Options</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleSetBin}>
           <Edit />
           Edit metadata
         </DropdownMenuItem>

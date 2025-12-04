@@ -36,6 +36,7 @@ export const getBinsByUser = async ({
         id: true,
         title: true,
         description: true,
+        slug: true,
         isPublic: true,
         _count: {
           select: {

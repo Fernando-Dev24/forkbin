@@ -1,3 +1,5 @@
+"use client";
+
 import { AnyZodSchema, InferZod } from "@/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

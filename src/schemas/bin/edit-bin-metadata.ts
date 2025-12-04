@@ -1,10 +1,7 @@
 import z from "zod";
+import { slugRegex } from "./create-bin-schema";
 
-// A common regex for slugs:
-// allows lowercase letters, numbers, and single hyphens
-export const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-
-export const CreateBinSchema = z.object({
+export const EditBinMetadataSchema = z.object({
   title: z.string().min(1, "Title is required").max(20),
   description: z
     .string()
@@ -17,5 +14,4 @@ export const CreateBinSchema = z.object({
       "Invalid slug format. Slugs must contain only lowercase letters, numbers, and single hyphens, and cannot start or end with a hyphen."
     ),
   isPublic: z.boolean().default(false),
-  isMockApi: z.boolean().default(false),
 });

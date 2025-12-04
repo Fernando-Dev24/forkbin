@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -35,7 +37,7 @@ export const ProjectCard = (bin: BinsByUserPayload) => {
               <Pencil />
               Edit
             </LinkButton>
-            <ProjectDropdownMenu />
+            <ProjectDropdownMenu {...bin} />
           </div>
           <div className="text-right space-y-1">
             <Badge variant={"secondary"}>
