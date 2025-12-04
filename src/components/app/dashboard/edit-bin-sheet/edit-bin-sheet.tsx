@@ -10,10 +10,7 @@ import {
   SheetFooter,
   SheetClose,
 } from "@/components/ui/sheet";
-import { useSheetType } from "@/hooks";
-import { BinsByUserPayload, InferZod } from "@/interfaces";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller } from "react-hook-form";
 import { createBinFields } from "../create-bin/create-bin-fields";
 import { FormFieldInput } from "../../../ui/form-fields-inputs/form-field-input";
 import { Separator } from "@/components/ui/separator";
@@ -24,27 +21,18 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useId } from "react";
-import { EditBinMetadataSchema } from "@/schemas/bin";
-
-type BinMetadataValues = InferZod<typeof EditBinMetadataSchema>;
+import { useEditBinMetadata } from "@/hooks";
 
 export const EditBinSheet = () => {
-  const { isOpen, itemToEdit, onToggle } = useSheetType<BinsByUserPayload>();
-  const { control, handleSubmit } = useForm<BinMetadataValues>({
-    resolver: zodResolver(EditBinMetadataSchema),
-    values: {
-      title: itemToEdit?.title || "",
-      description: itemToEdit?.description! || "",
-      slug: itemToEdit?.slug || "",
-      isPublic: itemToEdit?.isPublic || false,
-    },
-  });
-  const uniqueId = useId();
-
-  const onSubmit = (values: BinMetadataValues) => {
-    console.log({ values });
-  };
+  const {
+    isOpen,
+    itemToEdit,
+    control,
+    uniqueId,
+    handleSubmit,
+    onSubmit,
+    onToggle,
+  } = useEditBinMetadata();
 
   return (
     <Sheet open={isOpen} onOpenChange={(open) => onToggle(open, itemToEdit)}>
