@@ -9,3 +9,13 @@ export { SubmitButton } from "./submit-button/submit-button";
 export { FormError } from "./form-error/form-error";
 export { Empty } from "./empty/empty";
 export { PaginationWrapper } from "./pagination/pagination-wrapper";
+export {
+  Tags,
+  TagsContent,
+  TagsInput,
+  TagsList,
+  TagsEmpty,
+  TagsItem,
+  TagsTrigger,
+} from "./shadcn-io/tags";
+export { TagsField } from "./tags/tags-field";

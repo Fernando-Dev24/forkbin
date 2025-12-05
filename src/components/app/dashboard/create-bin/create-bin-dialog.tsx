@@ -1,7 +1,7 @@
 "use client";
 
 import { useId } from "react";
-import { Button, FormFieldInput } from "@/components/ui";
+import { Button, FormFieldInput, TagsField } from "@/components/ui";
 import {
   Dialog,
   DialogClose,
@@ -23,6 +23,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Controller } from "react-hook-form";
 
 export const CreateBinDialog = () => {
   const { control, handleSubmit, onSubmit } = useCreateBinForm(
@@ -31,6 +32,7 @@ export const CreateBinDialog = () => {
       title: "",
       slug: "",
       description: "",
+      tags: [],
       isMockApi: false,
       isPublic: false,
     }
@@ -66,6 +68,15 @@ export const CreateBinDialog = () => {
               renderLabel
             />
           ))}
+
+          <div>
+            <p className="text-sm mb-3">Tags</p>
+            <Controller
+              name="tags"
+              control={control}
+              render={({ field, fieldState }) => <TagsField />}
+            />
+          </div>
 
           <Separator className="my-5" />
 

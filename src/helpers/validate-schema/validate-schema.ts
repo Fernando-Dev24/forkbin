@@ -10,6 +10,7 @@ export const validateSchema = <TSchema extends AnyZodSchema>(
     return {
       ok: false,
       message: error.issues[0].message,
+      data: null,
     };
   }
 

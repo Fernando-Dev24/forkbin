@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -12,13 +11,12 @@ import {
   FormFieldPassword,
   Logo,
 } from "@/components/ui";
-import { useAuthForm } from "@/hooks";
+import { useAuthForm, useFormTransition } from "@/hooks";
 import { SignUpSchema } from "@/schemas/auth";
 import { FieldSeparator } from "@/components/ui/field";
 import { FiGithub } from "react-icons/fi";
 import { signUpFields } from "./sign-up-fields";
-import { FormErrorState, InferZod } from "@/interfaces";
-import { getFormData } from "@/helpers/get-form-data/get-form-data";
+import { InferZod } from "@/interfaces";
 import { SubmitButton } from "@/components/ui";
 import { onSignUp, onSignUpWithProvider } from "@/actions";
 
@@ -38,23 +36,16 @@ export default function SignUp() {
   const router = useRouter();
 
   /* TRANSITION */
-  const [isPending, startTransition] = useTransition();
-
-  /* STATES */
-  const [formErrorState, setFormErrorState] = useState<FormErrorState>(null);
+  const { pending, startTransition, clearError, setError } =
+    useFormTransition();
 
   const onSubmit = (values: InferZod<typeof SignUpSchema>) => {
-    setFormErrorState(null);
+    clearError();
 
     startTransition(async () => {
-      const formData = getFormData(values);
-
-      const response = await onSignUp(formData);
+      const response = await onSignUp(values);
       if (!response?.ok) {
-        setFormErrorState({
-          ok: false,
-          message: response?.message || "Error creating user",
-        });
+        setError(response?.message || "Error creating user");
         return;
       }
 
@@ -68,9 +59,10 @@ export default function SignUp() {
   };
 
   const signUpProvider = async (provider: Provider) => {
+    clearError();
     const { ok, message, redirectUrl } = await onSignUpWithProvider(provider);
     if (!ok) {
-      setFormErrorState({ ok, message });
+      setError(message);
       return;
     }
 
@@ -84,9 +76,7 @@ export default function SignUp() {
         <h1 className="my-3 text-4xl md:text-5xl font-medium">Sign Up</h1>
       </div>
 
-      {formErrorState !== null && (
-        <FormError message={formErrorState.message} />
-      )}
+      <FormError />
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -122,7 +112,7 @@ export default function SignUp() {
           })}
         </div>
 
-        <SubmitButton isPending={isPending} label="Sign Up" />
+        <SubmitButton isPending={pending} label="Sign Up" />
 
         <FieldSeparator className="mb-3">or continue with</FieldSeparator>
 

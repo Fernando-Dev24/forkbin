@@ -13,7 +13,7 @@ export const SubmitButton = ({ label, isPending }: Props) => {
     <Button
       type="submit"
       disabled={isPending}
-      className="w-full text-lg disabled:bg-muted disabled:text-muted-foreground"
+      className="w-full disabled:bg-muted disabled:text-muted-foreground"
     >
       {isPending && <Spinner />}
       {isPending ? "Loading..." : label}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, LinkButton } from "@/components/ui";
+import { Button, LinkButton, SubmitButton } from "@/components/ui";
 import {
   SheetContent,
   SheetHeader,
@@ -29,6 +29,7 @@ export const EditBinSheet = () => {
     itemToEdit,
     control,
     uniqueId,
+    pending,
     handleSubmit,
     onSubmit,
     onToggle,
@@ -97,7 +98,7 @@ export const EditBinSheet = () => {
           </div>
 
           <SheetFooter>
-            <Button type="submit">Save changes</Button>
+            <SubmitButton isPending={pending} label="Save changes" />
             <SheetClose asChild>
               <Button variant="outline">Close</Button>
             </SheetClose>

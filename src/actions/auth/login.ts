@@ -1,17 +1,14 @@
 "use server";
 
 import { handleActionError, validateSchema } from "@/helpers";
+import { InferZod } from "@/interfaces";
 import { createSSRClient } from "@/lib/supabase/server";
 import { LoginSchema } from "@/schemas/auth";
 
-export const onLogin = async (formData: FormData) => {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+type FormValues = InferZod<typeof LoginSchema>;
 
-  const { ok, message, data } = validateSchema(LoginSchema, {
-    email,
-    password,
-  });
+export const onLogin = async (values: FormValues) => {
+  const { ok, message, data } = validateSchema(LoginSchema, values);
 
   // Schema validation
   if (!ok || !data) {
@@ -21,7 +18,6 @@ export const onLogin = async (formData: FormData) => {
     };
   }
 
-  // TODO: Login user
   try {
     const supabase = await createSSRClient();
     const { error } = await supabase.auth.signInWithPassword({

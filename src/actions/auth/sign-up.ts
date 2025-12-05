@@ -6,18 +6,16 @@ import { prisma } from "@/lib/prisma";
 import { createSSRClient } from "@/lib/supabase/server";
 import { SignUpSchema } from "@/schemas/auth";
 
+type FormValues = InferZod<typeof SignUpSchema>;
+
 interface CheckUserParams {
   username: string;
   email: string;
   ignoreUserId?: string;
 }
 
-export const onSignUp = async (formData: FormData) => {
-  const values = Object.fromEntries(formData.entries());
-  const { ok, data, message } = validateSchema(
-    SignUpSchema,
-    values as InferZod<typeof SignUpSchema>
-  );
+export const onSignUp = async (values: FormValues) => {
+  const { ok, data, message } = validateSchema(SignUpSchema, values);
 
   if (!ok || !data) {
     return {

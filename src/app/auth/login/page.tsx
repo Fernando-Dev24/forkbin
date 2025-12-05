@@ -1,18 +1,16 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useEffect } from "react";
 import { toast } from "sonner";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAuthForm } from "@/hooks";
+import { useAuthForm, useFormTransition } from "@/hooks";
 import { LoginSchema } from "@/schemas/auth";
 import { FieldSeparator } from "@/components/ui/field";
 import { Button, FormError, FormFieldPassword } from "@/components/ui";
-import { FaGoogle } from "react-icons/fa";
 import { FiGithub } from "react-icons/fi";
 import { FormFieldInput, SubmitButton, Logo } from "@/components/ui";
-import { FormErrorState, InferZod } from "@/interfaces";
-import { getFormData } from "@/helpers/get-form-data/get-form-data";
+import { InferZod } from "@/interfaces";
 import { onLogin, onSignUpWithProvider } from "@/actions";
 import { Provider } from "@supabase/supabase-js";
 
@@ -29,23 +27,16 @@ export default function LoginPage() {
   const router = useRouter();
 
   /* TRANSITION */
-  const [isPending, startTransition] = useTransition();
-
-  /* STATES */
-  const [formErrorState, setFormErrorState] = useState<FormErrorState>(null);
+  const { pending, startTransition, clearError, setError } =
+    useFormTransition();
 
   const onSubmit = (values: InferZod<typeof LoginSchema>) => {
-    setFormErrorState(null);
+    clearError();
 
     startTransition(async () => {
-      const formData = getFormData(values);
-
-      const actionResp = await onLogin(formData);
+      const actionResp = await onLogin(values);
       if (!actionResp.ok) {
-        setFormErrorState({
-          ok: actionResp.ok,
-          message: actionResp.message,
-        });
+        setError(actionResp.message);
         return;
       }
 
@@ -59,9 +50,10 @@ export default function LoginPage() {
   };
 
   const signUpProvider = async (provider: Provider) => {
+    clearError();
     const { ok, message, redirectUrl } = await onSignUpWithProvider(provider);
     if (!ok) {
-      setFormErrorState({ ok, message });
+      setError(message);
       return;
     }
 
@@ -85,9 +77,7 @@ export default function LoginPage() {
         <h1 className="my-3 text-4xl md:text-5xl font-medium">Login</h1>
       </div>
 
-      {formErrorState !== null && (
-        <FormError message={formErrorState.message} />
-      )}
+      <FormError />
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* EMAIL */}
@@ -114,7 +104,7 @@ export default function LoginPage() {
           togglePassword={togglePassword}
         />
 
-        <SubmitButton label="Login" isPending={isPending} />
+        <SubmitButton label="Login" isPending={pending} />
 
         <FieldSeparator className="mb-3">or continue with</FieldSeparator>
 
