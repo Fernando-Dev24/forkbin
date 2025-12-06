@@ -3,6 +3,7 @@
 import { BinsByUserPayload } from "@/interfaces";
 import { ProjectCard } from "./project-card";
 import { EditBinSheet } from "..";
+import { TagsField } from "@/components/ui";
 
 interface Props {
   bins: BinsByUserPayload[];

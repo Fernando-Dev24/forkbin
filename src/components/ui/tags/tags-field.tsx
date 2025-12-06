@@ -15,58 +15,67 @@ import {
   TagsTrigger,
   TagsValue,
 } from "../shadcn-io/tags";
-import { Button } from "../button";
 import { CheckIcon, PlusIcon } from "lucide-react";
+import { Button } from "../button";
 import { ControllerRenderProps } from "react-hook-form";
-import { CreateBinSchema } from "@/schemas/bin";
 
 interface Props {
-  field: ControllerRenderProps<typeof CreateBinSchema, "tags">;
+  field: ControllerRenderProps<
+    {
+      title: string;
+      description: string;
+      slug: string;
+      isPublic: boolean;
+      isMockApi: boolean;
+      tags: string[];
+    },
+    "tags"
+  >;
 }
 
-export const TagsField = () => {
-  const [selected, setSelected] = useState<string[]>([]);
-  const [newTag, setNewTag] = useState("");
-  const [tags, setTags] = useState([...DEFAULT_TAGS]);
+export const TagsField = ({ field }: Props) => {
+  const [newTag, setNewTag] = useState<string>("");
+  const [tags, setTags] =
+    useState<{ id: string; label: string }[]>(DEFAULT_TAGS);
 
   const handleRemove = (value: string) => {
-    if (!selected.includes(value)) return;
-    console.log(`remove: ${value}`);
-    setSelected(selected.filter((tag) => tag !== value));
+    if (!field.value.includes(value)) {
+      return;
+    }
+    field.onChange(field.value.filter((v) => v !== value));
   };
 
   const handleSelect = (value: string) => {
-    if (selected.includes(value)) {
+    if (field.value.includes(value)) {
       handleRemove(value);
       return;
     }
-
-    console.log(`selected: ${value}`);
-    setSelected([...selected, value]);
+    field.onChange([...field.value, value]);
   };
 
   const handleCreateTag = () => {
-    console.log(`created: ${newTag}`);
-    setTags((prev) => [...prev, { value: newTag, label: newTag }]);
-    setSelected((prev) => [...prev, newTag]);
+    setTags((prev) => [
+      ...prev,
+      {
+        id: newTag,
+        label: newTag,
+      },
+    ]);
+    field.onChange([...field.value, newTag]);
     setNewTag("");
   };
-
   return (
     <Tags>
       <TagsTrigger>
-        {selected.map((tag) => (
+        {field.value.map((tag) => (
           <TagsValue key={tag} onRemove={() => handleRemove(tag)}>
-            {tags.find((t) => t.value === tag)?.label}
+            {tags.find((t) => t.id === tag)?.label}
           </TagsValue>
         ))}
       </TagsTrigger>
+
       <TagsContent>
-        <TagsInput
-          onValueChange={setNewTag}
-          placeholder="Search tag..."
-          id="tags"
-        />
+        <TagsInput onValueChange={setNewTag} placeholder="Search tag..." />
         <TagsList>
           <TagsEmpty>
             <Button
@@ -81,13 +90,9 @@ export const TagsField = () => {
           </TagsEmpty>
           <TagsGroup>
             {tags.map((tag) => (
-              <TagsItem
-                key={tag.value}
-                onSelect={handleSelect}
-                value={tag.value}
-              >
+              <TagsItem key={tag.id} onSelect={handleSelect} value={tag.id}>
                 {tag.label}
-                {selected.includes(tag.value) && (
+                {field.value.includes(tag.id) && (
                   <CheckIcon className="text-muted-foreground" size={14} />
                 )}
               </TagsItem>

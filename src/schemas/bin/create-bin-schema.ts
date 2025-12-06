@@ -16,7 +16,7 @@ export const CreateBinSchema = z.object({
       slugRegex,
       "Invalid slug format. Slugs must contain only lowercase letters, numbers, and single hyphens, and cannot start or end with a hyphen."
     ),
-  tags: z.array(z.string()).optional(),
+  tags: z.array(z.string()),
   isPublic: z.boolean().default(false),
   isMockApi: z.boolean().default(false),
 });
