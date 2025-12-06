@@ -1,7 +1,12 @@
 "use client";
 
 import { useId, useState } from "react";
-import { Button, FormFieldInput, TagsField } from "@/components/ui";
+import {
+  Button,
+  FormFieldInput,
+  SubmitButton,
+  TagsField,
+} from "@/components/ui";
 import {
   Dialog,
   DialogClose,
@@ -25,9 +30,10 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Controller } from "react-hook-form";
 import clsx from "clsx";
+import { Spinner } from "@/components/ui/spinner";
 
 export const CreateBinDialog = () => {
-  const { control, handleSubmit, onSubmit } = useCreateBinForm(
+  const { control, pending, handleSubmit, onSubmit } = useCreateBinForm(
     CreateBinSchema,
     {
       title: "",
@@ -126,8 +132,17 @@ export const CreateBinDialog = () => {
 
             <DialogFooter className="mt-5">
               <Button type="submit">
-                <FilePlus />
-                Create bin
+                {pending ? (
+                  <>
+                    <Spinner></Spinner>
+                    Loading...
+                  </>
+                ) : (
+                  <>
+                    <FilePlus />
+                    Create bin
+                  </>
+                )}
               </Button>
 
               <DialogClose asChild>
