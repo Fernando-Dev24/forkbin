@@ -14,14 +14,21 @@ import { formatDate } from "@/helpers/date/format-date";
 import { BinsByUserPayload } from "@/interfaces";
 import { Pencil, StarIcon } from "lucide-react";
 import { ProjectDropdownMenu } from "./project-dropdown-menu";
+import { renderTags } from "@/helpers/render-tags/render-tags";
 
 export const ProjectCard = (bin: BinsByUserPayload) => {
+  console.log(renderTags(bin.tags));
   return (
     <>
       <Card>
         <CardHeader>
-          <CardTitle>{bin.title}</CardTitle>
-          <CardDescription>{bin.description}</CardDescription>
+          <div className="flex justify-between items-center">
+            <div className="space-y-2">
+              <CardTitle>{bin.title}</CardTitle>
+              <CardDescription>{bin.description}</CardDescription>
+            </div>
+            <Badge variant={"outline"}>/{bin.slug}</Badge>
+          </div>
         </CardHeader>
 
         <CardContent>
@@ -43,8 +50,10 @@ export const ProjectCard = (bin: BinsByUserPayload) => {
             <Badge variant={"secondary"}>
               {bin.isPublic ? "Public" : "Private"}{" "}
             </Badge>
-            <p className="text-xs text-muted-foreground">
-              {formatDate(bin.updatedAt)}
+            <p className="text-xs text-muted-foreground capitalize">
+              {bin.tags.length < 1
+                ? formatDate(bin.updatedAt)
+                : renderTags(bin.tags).join(", ")}
             </p>
           </div>
         </CardFooter>

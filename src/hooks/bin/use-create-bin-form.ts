@@ -12,7 +12,9 @@ export const useCreateBinForm = <TSchema extends AnyZodSchema>(
   schema: TSchema,
   values: InferZod<TSchema>
 ) => {
-  const { control, handleSubmit, reset } = useForm<InferZod<TSchema>>({
+  const { control, handleSubmit, reset, watch, setValue, getValues } = useForm<
+    InferZod<TSchema>
+  >({
     resolver: zodResolver(schema),
     defaultValues: values,
   });
@@ -41,6 +43,8 @@ export const useCreateBinForm = <TSchema extends AnyZodSchema>(
 
   return {
     control,
+    watch,
+    setValue,
     reset,
     pending,
     handleSubmit,

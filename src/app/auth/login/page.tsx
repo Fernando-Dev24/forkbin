@@ -89,6 +89,7 @@ export default function LoginPage() {
           type="email"
           description="Enter your email"
           id="email"
+          renderLabel
         />
 
         {/* PASSWORD */}
@@ -102,6 +103,7 @@ export default function LoginPage() {
           description="It must be at least 6 characters long"
           isPasswordType={isPasswordType}
           togglePassword={togglePassword}
+          renderBtn
         />
 
         <SubmitButton label="Login" isPending={pending} />

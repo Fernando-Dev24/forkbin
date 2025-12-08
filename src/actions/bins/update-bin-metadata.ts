@@ -5,7 +5,7 @@ import { InferZod } from "@/interfaces";
 import { prisma } from "@/lib/prisma";
 import { CreateBinSchema } from "@/schemas/bin";
 
-const EditSchema = CreateBinSchema.omit({ isMockApi: true });
+const EditSchema = CreateBinSchema.omit({ isMockApi: true, tags: true });
 type FormValues = InferZod<typeof EditSchema>;
 
 interface Params {

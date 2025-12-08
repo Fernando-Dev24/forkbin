@@ -38,6 +38,7 @@ export const getBinsByUser = async ({
         description: true,
         slug: true,
         isPublic: true,
+        tags: true,
         _count: {
           select: {
             forks: true,

@@ -7,6 +7,7 @@ export type BinsByUserPayload = Prisma.BinGetPayload<{
     description: true;
     slug: true;
     isPublic: true;
+    tags: true;
     _count: {
       select: {
         forks: true;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import {
   Button,
   FormFieldInput,
@@ -31,23 +31,29 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Controller } from "react-hook-form";
 import clsx from "clsx";
 import { Spinner } from "@/components/ui/spinner";
+import { slugify } from "@/helpers/slugify/slugify";
 
 export const CreateBinDialog = () => {
-  const { control, pending, handleSubmit, onSubmit } = useCreateBinForm(
-    CreateBinSchema,
-    {
+  const { control, watch, setValue, pending, handleSubmit, onSubmit } =
+    useCreateBinForm(CreateBinSchema, {
       title: "",
       slug: "",
       description: "",
       tags: [],
       isMockApi: false,
       isPublic: false,
-    }
-  );
+    });
 
   const [isOpen, setIsOpen] = useState(false);
 
   const uniqueId = useId();
+  const title = watch("title");
+
+  useEffect(() => {
+    if (title) {
+      setValue("slug", slugify(title));
+    }
+  }, [title]);
 
   return (
     <Dialog

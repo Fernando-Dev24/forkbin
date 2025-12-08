@@ -79,7 +79,7 @@ export default function SignUp() {
       <FormError />
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3">
           {signUpFields.map(({ name, renderBtn, ...restProps }) => {
             if (name === "password" || name === "confirmPassword") {
               return (
@@ -107,6 +107,7 @@ export default function SignUp() {
                 type="text"
                 id={name}
                 key={name}
+                renderLabel
               />
             );
           })}
