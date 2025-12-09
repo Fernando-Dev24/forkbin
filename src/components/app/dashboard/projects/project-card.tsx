@@ -17,7 +17,6 @@ import { ProjectDropdownMenu } from "./project-dropdown-menu";
 import { renderTags } from "@/helpers/render-tags/render-tags";
 
 export const ProjectCard = (bin: BinsByUserPayload) => {
-  console.log(renderTags(bin.tags));
   return (
     <>
       <Card>
@@ -27,7 +26,9 @@ export const ProjectCard = (bin: BinsByUserPayload) => {
               <CardTitle>{bin.title}</CardTitle>
               <CardDescription>{bin.description}</CardDescription>
             </div>
-            <Badge variant={"outline"}>/{bin.slug}</Badge>
+            <Badge variant={"outline"} className="hidden md:inline">
+              /{bin.slug}
+            </Badge>
           </div>
         </CardHeader>
 
@@ -40,7 +41,7 @@ export const ProjectCard = (bin: BinsByUserPayload) => {
 
         <CardFooter className="flex justify-between items-center">
           <div className="space-x-5">
-            <LinkButton href="/app/edit/b/abc">
+            <LinkButton href={`/app/edit/b/${bin.id}`}>
               <Pencil />
               Edit
             </LinkButton>

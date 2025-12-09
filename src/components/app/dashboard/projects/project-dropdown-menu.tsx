@@ -9,7 +9,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useSheetType } from "@/hooks";
 import { BinsByUserPayload } from "@/interfaces";
-import { Edit, Settings, Share, Trash } from "lucide-react";
+import { Edit, Settings, Share } from "lucide-react";
+import { DeleteAlertDialog } from "@/components/ui";
 
 export const ProjectDropdownMenu = (bin: BinsByUserPayload) => {
   const { onToggle } = useSheetType<BinsByUserPayload>();
@@ -35,9 +36,8 @@ export const ProjectDropdownMenu = (bin: BinsByUserPayload) => {
           Share
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive">
-          <Trash />
-          Delete bin
+        <DropdownMenuItem asChild>
+          <DeleteAlertDialog binId={bin.id} />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

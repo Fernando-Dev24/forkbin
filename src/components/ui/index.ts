@@ -19,3 +19,4 @@ export {
   TagsTrigger,
 } from "./shadcn-io/tags";
 export { TagsField } from "./tags/tags-field";
+export { DeleteAlertDialog } from "./delete-alert-dialog/delete-alert-dialog";

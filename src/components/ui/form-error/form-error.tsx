@@ -1,7 +1,8 @@
 "use client";
 
 import { useFormError } from "@/store";
-import { TriangleAlert } from "lucide-react";
+import { AlertCircleIcon, TriangleAlert } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "../alert";
 
 export const FormError = () => {
   const { ok, message } = useFormError();
@@ -9,12 +10,13 @@ export const FormError = () => {
   return (
     <>
       {!ok && (
-        <div className="my-5 py-2 px-4 rounded border border-destructive bg-destructive/10">
-          <p className="flex items-center gap-x-2 text-sm text-destructive-foreground">
-            <TriangleAlert size={15} />
-            {message}
-          </p>
-        </div>
+        <Alert variant={"destructive"}>
+          <AlertCircleIcon />
+          <AlertTitle>Something went wrong</AlertTitle>
+          <AlertDescription>
+            <p>{message}</p>
+          </AlertDescription>
+        </Alert>
       )}
     </>
   );

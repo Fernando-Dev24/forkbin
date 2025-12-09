@@ -11,3 +11,5 @@ export { getPopularBins } from "./bins/get-popular-bins";
 export { getBinsByUser } from "./bins/get-bins-by-user";
 export { onUpdateBinMetadata } from "./bins/update-bin-metadata";
 export { onCreateBin } from "./bins/create-bin";
+export { onDeleteBin } from "./bins/delete-bin";
+export { getBinById } from "./bins/get-bin-by-id";
