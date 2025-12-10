@@ -11,15 +11,6 @@ export default async function EditBinPage({ params }: PropsById) {
 
   return (
     <section className="md:px-10 space-y-10">
-      {/* HEADER */}
-      <header>
-        <span className="text-sm text-accent-foreground uppercase">
-          Editing:
-        </span>
-        <h2 className="text-4xl md:text-5xl font-semibold">{bin.title}</h2>
-        <p className="text-muted-foreground">{bin.description}</p>
-      </header>
-
       <EditBinForm bin={bin} />
     </section>
   );

@@ -91,11 +91,7 @@ export const CreateBinDialog = () => {
 
             <div>
               <p className="text-sm mb-3">Tags</p>
-              <Controller
-                name="tags"
-                control={control}
-                render={({ field }) => <TagsField field={field} />}
-              />
+              <TagsField control={control} name="tags" />
             </div>
 
             <Separator className="my-5" />

@@ -1,0 +1,23 @@
+CREAR COMPONENTES COMPLEJOS PARA RHF
+
+Hay dos props vitales para crear componentes reutilizables en formularios de RHF que no pertenezcan a los tipos de valores normales: "string", "number", etc.
+
+1. Generico TFieldValues representa el objeto completo de los valores del formulario
+2. TName representa el campo especifico de ese objeto de valores del formulario
+
+Desglosando:
+
+1. TFieldValues es el tipo generico mas importante puesto que esto le dice a TS como se ve el formulario y debe de extender del tipo con el mismo nombre, importado de RHF
+
+2. Control<TFieldValues> al usar control, ahora TS sabe de qué formulario vienen los valores
+
+3. TName es una utility type que toma el TFieldValues y extrae todas las keys de ese objeto del formulario, incluso aquellos campos que pudieran estar anidados
+
+4. IMPORTANTE, si sabemos que es lo que va a recibir nuestro componente seria bueno hacer un type aparte que le diga si espera, un string, un array de algun tipo en cuestion, etc
+
+Esto es importante porque podemos hacer una restriccion de tipo, por ejemplo en un componente que va a recibir un array de strings esta prop puede ser:
+
+type TagsArray = string[];
+mustBeStringArray: FieldPathValue<TFieldValues, TName> extends TagsArray
+   ? true
+   : never <- en este caso, si el nombre no apunta a un tipo de dato string[] esto devolvera never, marcando un error para el desarrollador

@@ -24,6 +24,7 @@ export const FormFieldInput = <T extends FieldValues = FieldValues>({
             type={props.type}
             placeholder={props.placeholder}
             id={id}
+            className={props.className}
             {...field}
           />
 

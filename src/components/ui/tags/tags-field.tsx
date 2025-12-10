@@ -17,89 +17,110 @@ import {
 } from "../shadcn-io/tags";
 import { CheckIcon, PlusIcon } from "lucide-react";
 import { Button } from "../button";
-import { ControllerRenderProps } from "react-hook-form";
+import { Controller, FieldPathByValue, FieldValues } from "react-hook-form";
+import { TagsArrayType, TagsFieldProps } from "@/interfaces";
 
-interface Props {
-  field: ControllerRenderProps<
-    {
-      title: string;
-      description: string;
-      slug: string;
-      isPublic: boolean;
-      isMockApi: boolean;
-      tags: string[];
-    },
-    "tags"
-  >;
-}
-
-export const TagsField = ({ field }: Props) => {
+export const TagsField = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPathByValue<
+    TFieldValues,
+    TagsArrayType
+  > = FieldPathByValue<TFieldValues, TagsArrayType>
+>({
+  control,
+  name,
+}: TagsFieldProps<TFieldValues, TName>) => {
   const [newTag, setNewTag] = useState<string>("");
   const [tags, setTags] =
     useState<{ id: string; label: string }[]>(DEFAULT_TAGS);
 
-  const handleRemove = (value: string) => {
-    if (!field.value.includes(value)) {
-      return;
-    }
-    field.onChange(field.value.filter((v) => v !== value));
-  };
-
-  const handleSelect = (value: string) => {
-    if (field.value.includes(value)) {
-      handleRemove(value);
-      return;
-    }
-    field.onChange([...field.value, value]);
-  };
-
-  const handleCreateTag = () => {
-    setTags((prev) => [
-      ...prev,
-      {
-        id: newTag,
-        label: newTag,
-      },
-    ]);
-    field.onChange([...field.value, newTag]);
-    setNewTag("");
-  };
   return (
-    <Tags>
-      <TagsTrigger>
-        {field.value.map((tag) => (
-          <TagsValue key={tag} onRemove={() => handleRemove(tag)}>
-            {tags.find((t) => t.id === tag)?.label}
-          </TagsValue>
-        ))}
-      </TagsTrigger>
+    <Controller
+      control={control}
+      name={name}
+      render={({ field }) => {
+        const tagsValue = field.value as TagsArrayType;
 
-      <TagsContent>
-        <TagsInput onValueChange={setNewTag} placeholder="Search tag..." />
-        <TagsList>
-          <TagsEmpty>
-            <Button
-              className="mx-auto flex cursor-pointer items-center gap-2"
-              onClick={handleCreateTag}
-              type="button"
-              variant={"outline"}
-            >
-              <PlusIcon className="text-muted-foreground" size={14} />
-              Create new tag: {newTag}
-            </Button>
-          </TagsEmpty>
-          <TagsGroup>
-            {tags.map((tag) => (
-              <TagsItem key={tag.id} onSelect={handleSelect} value={tag.id}>
-                {tag.label}
-                {field.value.includes(tag.id) && (
-                  <CheckIcon className="text-muted-foreground" size={14} />
-                )}
-              </TagsItem>
-            ))}
-          </TagsGroup>
-        </TagsList>
-      </TagsContent>
-    </Tags>
+        const handleRemove = (value: string) => {
+          if (!tagsValue.includes(value)) {
+            return;
+          }
+          field.onChange(tagsValue.filter((v) => v !== value));
+        };
+
+        const handleSelect = (value: string) => {
+          if (tagsValue.includes(value)) {
+            handleRemove(value);
+            return;
+          }
+          field.onChange([...tagsValue, value]);
+        };
+
+        const handleCreateTag = () => {
+          setTags((prev) => [
+            ...prev,
+            {
+              id: newTag,
+              label: newTag,
+            },
+          ]);
+          field.onChange([...tagsValue, newTag]);
+          setNewTag("");
+        };
+
+        return (
+          <Tags>
+            <TagsTrigger>
+              {tagsValue.map((tag) => (
+                <TagsValue
+                  key={tag}
+                  onRemove={() => handleRemove(tag)}
+                  className="capitalize"
+                >
+                  {tags.find((t) => t.id === tag)?.label || tag}
+                </TagsValue>
+              ))}
+            </TagsTrigger>
+
+            <TagsContent>
+              <TagsInput
+                onValueChange={setNewTag}
+                placeholder="Search tag..."
+              />
+              <TagsList>
+                <TagsEmpty>
+                  <Button
+                    className="mx-auto flex cursor-pointer items-center gap-2"
+                    onClick={handleCreateTag}
+                    type="button"
+                    variant={"outline"}
+                  >
+                    <PlusIcon className="text-muted-foreground" size={14} />
+                    Create new tag: {newTag}
+                  </Button>
+                </TagsEmpty>
+                <TagsGroup>
+                  {tags.map((tag) => (
+                    <TagsItem
+                      key={tag.id}
+                      onSelect={handleSelect}
+                      value={tag.id}
+                    >
+                      {tag.label}
+                      {tagsValue.includes(tag.id) && (
+                        <CheckIcon
+                          className="text-muted-foreground"
+                          size={14}
+                        />
+                      )}
+                    </TagsItem>
+                  ))}
+                </TagsGroup>
+              </TagsList>
+            </TagsContent>
+          </Tags>
+        );
+      }}
+    />
   );
 };
