@@ -1,4 +1,4 @@
-import { Inter, IBM_Plex_Mono, Outfit } from "next/font/google";
+import { Inter, IBM_Plex_Mono, Outfit, Cascadia_Code } from "next/font/google";
 
 export const mainFont = Outfit({
   variable: "--font-outfit",

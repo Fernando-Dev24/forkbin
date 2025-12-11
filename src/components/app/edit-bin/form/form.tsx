@@ -18,6 +18,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Checkbox } from "@/components/ui/checkbox";
+import { EditorWrapper } from "./editor-wrapper";
 
 const EditBinContentSchema = z.object({
   title: z.string().min(1, "Title is required").max(20),
@@ -119,6 +120,8 @@ export const EditBinForm = ({ bin }: Props) => {
             </FieldContent>
           </Field>
         </div>
+
+        <EditorWrapper />
       </form>
     </div>
   );
