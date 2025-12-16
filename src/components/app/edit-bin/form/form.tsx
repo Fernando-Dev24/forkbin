@@ -10,7 +10,7 @@ import { FormFieldInput } from "../../../ui/form-fields-inputs/form-field-input"
 import { createBinFields } from "../../dashboard/create-bin/create-bin-fields";
 import { useEffect } from "react";
 import { slugify } from "@/helpers/slugify/slugify";
-import { TagsField } from "@/components/ui";
+import { Button, TagsField } from "@/components/ui";
 import {
   Field,
   FieldContent,
@@ -19,58 +19,20 @@ import {
 } from "@/components/ui/field";
 import { Checkbox } from "@/components/ui/checkbox";
 import { EditorWrapper } from "./editor-wrapper";
-
-const EditBinContentSchema = z.object({
-  title: z.string().min(1, "Title is required").max(20),
-  description: z
-    .string()
-    .min(1, "Description is required")
-    .max(50, "Description could not be more than 50 characters"),
-  slug: z
-    .string()
-    .regex(
-      slugRegex,
-      "Invalid slug format. Slugs must contain only lowercase letters, numbers, and single hyphens, and cannot start or end with a hyphen."
-    ),
-  tags: z.array(z.string()),
-  content: z.any(),
-  isPublic: z.boolean().default(false),
-  isMockApi: z.boolean().default(false),
-});
-
-type EditBinValues = InferZod<typeof EditBinContentSchema>;
+import { useEditBinContent } from "@/hooks";
+import { EditBinValues } from "@/hooks/bin/use-edit-bin-content";
 
 interface Props {
   bin: Bin;
 }
 
 export const EditBinForm = ({ bin }: Props) => {
-  const { control, handleSubmit, watch, setValue } = useForm<EditBinValues>({
-    resolver: zodResolver(EditBinContentSchema),
-    values: {
-      title: bin.title,
-      description: bin.description || "",
-      slug: bin.slug,
-      tags: bin.tags,
-      content: bin.content,
-      isPublic: bin.isPublic,
-      isMockApi: bin.isMockApi,
-    },
-  });
-
-  const onSubmit = (values: EditBinValues) => {
-    console.log({ values });
-  };
-
-  const title = watch("title");
-
-  useEffect(() => {
-    if (title) setValue("slug", slugify(title));
-  }, [title]);
+  const { control, handleSubmit, onSubmit } = useEditBinContent({ bin });
 
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
+        {/* // TODO: Add an accordion to clean the page to focus on editor */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5">
           {Array.from([createBinFields[0], createBinFields[1]]).map((field) => (
             <FormFieldInput<EditBinValues>
@@ -121,7 +83,20 @@ export const EditBinForm = ({ bin }: Props) => {
           </Field>
         </div>
 
-        <EditorWrapper />
+        <div className="my-20">
+          <div className="flex items-baseline justify-between">
+            <h4 className="mb-5 uppercase font-semibold text-accent-foreground">
+              YOUR JSON CONTENT
+            </h4>
+
+            <Button type="submit">Save changes</Button>
+          </div>
+          <EditorWrapper
+            control={control}
+            name="content"
+            content={bin.content}
+          />
+        </div>
       </form>
     </div>
   );

@@ -48,9 +48,6 @@ export const getBinsByUser = async ({
       },
       take: take,
       skip: (page - 1) * take,
-      orderBy: {
-        updatedAt: "desc",
-      },
     });
 
     const totalBins = await prisma.bin.count({ where: { authorId: userId } });
