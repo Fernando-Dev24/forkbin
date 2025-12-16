@@ -9,6 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import clsx from "clsx";
 import { Controller, FieldPathByValue, FieldValues } from "react-hook-form";
 import { EditorFieldProps } from "@/interfaces";
+import { useSidebar } from "@/components/ui/sidebar";
 
 interface ErrorType {
   id: string;
@@ -37,6 +38,7 @@ export const EditorWrapper = <
     JSON.stringify(content || initialCode, null, 2)
   );
   const [codeErrors, setCodeErrors] = useState<ErrorType[]>([]);
+  const { open } = useSidebar();
 
   // Before mount in DOM
   const handleEditorWillMount: BeforeMount = (monacoInstance) => {
@@ -72,7 +74,11 @@ export const EditorWrapper = <
         }, []);
 
         return (
-          <div>
+          <div
+            className={clsx("w-full", {
+              "w-[95%]!": open,
+            })}
+          >
             <Alert
               variant={"destructive"}
               className={clsx("mb-5", {

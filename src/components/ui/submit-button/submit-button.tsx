@@ -6,15 +6,19 @@ import { Spinner } from "../spinner";
 interface Props {
   label: string;
   isPending: boolean;
+  className?: string;
 }
 
-export const SubmitButton = ({ label, isPending }: Props) => {
+const defaultClassName =
+  "w-full disabled:bg-muted disabled:text-muted-foreground";
+
+export const SubmitButton = ({
+  label,
+  isPending,
+  className = defaultClassName,
+}: Props) => {
   return (
-    <Button
-      type="submit"
-      disabled={isPending}
-      className="w-full disabled:bg-muted disabled:text-muted-foreground"
-    >
+    <Button type="submit" disabled={isPending} className={className}>
       {isPending && <Spinner />}
       {isPending ? "Loading..." : label}
     </Button>
