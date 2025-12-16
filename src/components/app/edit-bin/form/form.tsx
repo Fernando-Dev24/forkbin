@@ -22,6 +22,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Clipboard as ClipboardIcon } from "lucide-react";
+import { check } from "zod";
 
 interface Props {
   bin: Bin;
@@ -31,7 +32,8 @@ export const EditBinForm = ({ bin }: Props) => {
   const {
     control,
     pending,
-    getValues,
+    watch,
+    handleCheckboxes,
     handleCopyEndpoint,
     handleSubmit,
     onSubmit,
@@ -43,10 +45,7 @@ export const EditBinForm = ({ bin }: Props) => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Accordion type="single" collapsible>
-          <AccordionItem
-            value="item-1"
-            className="px-5 rounded-lg hover:bg-card transition-colors duration-150"
-          >
+          <AccordionItem value="item-1" className="px-5 rounded-lg bg-card">
             <AccordionTrigger>Bin metadata</AccordionTrigger>
             <AccordionContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5">
@@ -78,7 +77,13 @@ export const EditBinForm = ({ bin }: Props) => {
                 </Field>
 
                 <Field orientation={"horizontal"}>
-                  <Checkbox id={`isPublic`} />
+                  <Checkbox
+                    id={`isPublic`}
+                    checked={watch("isPublic")}
+                    onCheckedChange={(checked) =>
+                      handleCheckboxes("isPublic", checked)
+                    }
+                  />
                   <FieldContent>
                     <FieldLabel htmlFor={`isPublic`}>Public</FieldLabel>
                     <FieldDescription>
@@ -89,7 +94,13 @@ export const EditBinForm = ({ bin }: Props) => {
                 </Field>
 
                 <Field orientation={"horizontal"}>
-                  <Checkbox id={`isMockApi`} checked={getValues("isMockApi")} />
+                  <Checkbox
+                    id={`isMockApi`}
+                    checked={watch("isMockApi")}
+                    onCheckedChange={(checked) =>
+                      handleCheckboxes("isMockApi", checked)
+                    }
+                  />
                   <FieldContent>
                     <FieldLabel htmlFor={`isMockApi`}>Mock API</FieldLabel>
                     <FieldDescription>

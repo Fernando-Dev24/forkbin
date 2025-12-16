@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { useFormTransition } from "../use-form-transition";
 import { toast } from "sonner";
 import { onUpdateBin } from "@/actions";
+import { CheckedState } from "@radix-ui/react-checkbox";
 
 interface Params {
   bin: Bin;
@@ -37,8 +38,26 @@ export const useEditBinContent = ({ bin }: Params) => {
     // TODO: Validate that if isMockApi is true, its content needs to have the following structure:
     // TODO: METHOD > STATUS > ENDPOINT > DATA
     startTransition(async () => {
-      await onUpdateBin({ binId: bin.id, values });
+      const resp = await onUpdateBin({ binId: bin.id, values });
+      console.log(resp);
     });
+  };
+
+  const handleCheckboxes = (
+    name: "isMockApi" | "isPublic",
+    checked: CheckedState
+  ) => {
+    if (checked === "indeterminate") return;
+    switch (name) {
+      case "isMockApi":
+        setValue("isMockApi", checked);
+        break;
+      case "isPublic":
+        setValue("isPublic", checked);
+        break;
+      default:
+        break;
+    }
   };
 
   const handleCopyEndpoint = () => {
@@ -47,7 +66,6 @@ export const useEditBinContent = ({ bin }: Params) => {
   };
 
   const title = watch("title");
-  watch(["isMockApi", "isPublic"]);
 
   useEffect(() => {
     if (title) setValue("slug", slugify(title));
@@ -56,7 +74,8 @@ export const useEditBinContent = ({ bin }: Params) => {
   return {
     control,
     pending,
-    getValues,
+    watch,
+    handleCheckboxes,
     handleCopyEndpoint,
     handleSubmit,
     onSubmit,

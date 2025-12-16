@@ -1,5 +1,6 @@
 "use server";
 
+import { validateApiSchema } from "@/helpers";
 import { InferZod } from "@/interfaces";
 import { EditBinContentSchema } from "@/schemas/bin";
 
@@ -11,5 +12,14 @@ interface Params {
 }
 
 export const onUpdateBin = async ({ binId, values }: Params) => {
-  console.log({ binId, values });
+  const { isMockApi } = values;
+  // Validar primero si cumple con el schema de API si esta marcado
+  if (isMockApi) {
+    return validateApiSchema(values.content);
+  }
+
+  return {
+    ok: true,
+    message: "Updated successfully",
+  };
 };
