@@ -1,7 +1,12 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import { Editor, type OnChange, type BeforeMount } from "@monaco-editor/react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  Editor,
+  type OnChange,
+  type BeforeMount,
+  OnMount,
+} from "@monaco-editor/react";
 import { EditorLoading } from "./editor-loading";
 import { forkbinTheme } from "./forkbin-theme";
 import { generateUUID } from "@/helpers/uuid/generate-uuid";
@@ -100,6 +105,7 @@ export const EditorWrapper = <
 
             <div className="w-full h-[600px] text-xl border border-foreground/10">
               <Editor
+                path="content.json"
                 defaultLanguage="json"
                 language="json"
                 options={{

@@ -35,7 +35,6 @@ export const CreateBinDialog = () => {
       slug: "",
       description: "",
       tags: [],
-      isMockApi: false,
       isPublic: false,
     });
 
@@ -106,20 +105,6 @@ export const CreateBinDialog = () => {
                   <FieldDescription>
                     If you mark your bin as public, it counts on community
                     stats, and anyone may fork it
-                  </FieldDescription>
-                </FieldContent>
-              </Field>
-
-              <Field orientation={"horizontal"}>
-                <Checkbox id={`${uniqueId}-isMockApi`} />
-                <FieldContent>
-                  <FieldLabel htmlFor={`${uniqueId}-isMockApi`}>
-                    Mock API
-                  </FieldLabel>
-                  <FieldDescription>
-                    Consider that if you mark this bin as mock API, it will must
-                    fill the schema: METHOD {">"} STATUS CODE {">"} ENDPOINT{" "}
-                    {">"} response data. You can change this later.
                   </FieldDescription>
                 </FieldContent>
               </Field>

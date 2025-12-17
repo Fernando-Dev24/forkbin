@@ -15,6 +15,7 @@ export const EditBinContentSchema = z.object({
     ),
   tags: z.array(z.string()),
   content: z.any(),
+  schema: z.any(),
   isPublic: z.boolean().default(false),
-  isMockApi: z.boolean().default(false),
+  useSchema: z.boolean(),
 });

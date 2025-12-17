@@ -18,5 +18,4 @@ export const CreateBinSchema = z.object({
     ),
   tags: z.array(z.string()),
   isPublic: z.boolean().default(false),
-  isMockApi: z.boolean().default(false),
 });

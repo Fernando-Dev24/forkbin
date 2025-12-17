@@ -32,15 +32,3 @@ export interface TagsFieldProps<
   control: Control<TFieldValues>;
   name: TName;
 }
-
-export interface EditorFieldProps<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPathByValue<TFieldValues, string> = FieldPathByValue<
-    TFieldValues,
-    string
-  >
-> {
-  control: Control<TFieldValues>;
-  name: TName;
-  content: JsonValue;
-}

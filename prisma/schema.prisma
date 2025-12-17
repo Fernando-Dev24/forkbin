@@ -70,10 +70,11 @@ model Bin {
   slug          String    @unique                     // URL bonita: /b/username/titulo-lindo
   title         String
   description   String?
+  useSchema     Boolean   @default(false)
+  schema        Json?
   content       Json                              // El JSON del mock API
   tags          String[]  @default([])
   isPublic      Boolean   @default(true)            // false = solo el dueño y futuros equipos
-  isMockApi     Boolean   @default(false)
 
   // Árbol de forks
   forkedFromId  String?                             // null = bin original

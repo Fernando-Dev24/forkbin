@@ -5,7 +5,7 @@ import { slugify } from "@/helpers/slugify/slugify";
 import { InferZod } from "@/interfaces";
 import { EditBinContentSchema } from "@/schemas/bin";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useFormTransition } from "../use-form-transition";
 import { toast } from "sonner";
@@ -19,7 +19,7 @@ interface Params {
 export type EditBinValues = InferZod<typeof EditBinContentSchema>;
 
 export const useEditBinContent = ({ bin }: Params) => {
-  const { control, handleSubmit, watch, getValues, setValue } =
+  const { control, handleSubmit, watch, setValue, getValues } =
     useForm<EditBinValues>({
       resolver: zodResolver(EditBinContentSchema),
       values: {
@@ -28,41 +28,40 @@ export const useEditBinContent = ({ bin }: Params) => {
         slug: bin.slug,
         tags: bin.tags,
         content: bin.content,
+        schema: bin.schema,
         isPublic: bin.isPublic,
-        isMockApi: bin.isMockApi,
+        useSchema: bin.useSchema,
       },
     });
   const { pending, startTransition } = useFormTransition();
+  const [isSchemaEditor, setIsSchemaEditor] = useState(false);
 
   const onSubmit = (values: EditBinValues) => {
-    // TODO: Validate that if isMockApi is true, its content needs to have the following structure:
-    // TODO: METHOD > STATUS > ENDPOINT > DATA
     startTransition(async () => {
-      const resp = await onUpdateBin({ binId: bin.id, values });
-      console.log(resp);
+      const { ok, message } = await onUpdateBin({ binId: bin.id, values });
+      if (!ok) {
+        toast.error(message, { position: "top-center" });
+        return;
+      }
+
+      toast.success(message, { position: "top-center" });
     });
   };
 
-  const handleCheckboxes = (
-    name: "isMockApi" | "isPublic",
-    checked: CheckedState
-  ) => {
+  const handleCheckboxes = (checked: CheckedState) => {
     if (checked === "indeterminate") return;
-    switch (name) {
-      case "isMockApi":
-        setValue("isMockApi", checked);
-        break;
-      case "isPublic":
-        setValue("isPublic", checked);
-        break;
-      default:
-        break;
-    }
+    setValue("isPublic", checked);
   };
 
   const handleCopyEndpoint = () => {
     navigator.clipboard.writeText(`https://forkbin.com/api/${bin.slug}`);
     toast.success("Endpoint copied to clipboard");
+  };
+
+  const toggleRenderSchema = () => {
+    const currentValue = getValues("useSchema");
+    setValue("useSchema", !currentValue);
+    setIsSchemaEditor((prev) => !prev);
   };
 
   const title = watch("title");
@@ -74,6 +73,8 @@ export const useEditBinContent = ({ bin }: Params) => {
   return {
     control,
     pending,
+    isSchemaEditor,
+    toggleRenderSchema,
     watch,
     handleCheckboxes,
     handleCopyEndpoint,
